@@ -48,8 +48,8 @@
             background-color: white;
         }
         div.image-container {
-            width: 200px;
-            height: 200px;
+            width: 400px;
+            height: 400px;
             border-radius: 12%;
             overflow: hidden; /* hides image overflow */
             margin-left: 30px; /* space between image and bio */
@@ -57,6 +57,23 @@
         div.image-container img {
             width: 100%;
             height: 100%;
+        }
+        div.bio-container {
+            width: 40%;
+            height: 200px;
+            text-align: left;
+            padding: 20px;
+        }
+        div.bio-container p:first-child { /* Target the first paragraph */
+            font-size: 20px; /* Adjust as needed */
+            font-weight: bold; /* Adjust as needed */
+            line-height: 1.5; /* Adjust as needed */
+            margin-bottom: 10px; /* Add space between paragraphs */
+        }
+        div.bio-container p:nth-child(2), div.bio-container p:nth-child(3) { /* Target remaining paragraphs */ 
+            font-size: 16px; /* Adjust as needed */
+            font-weight: normal; /* Adjust as needed */
+            line-height: 1.5; /* Adjust as needed */
         }
     </style>
 </head>
@@ -71,12 +88,19 @@
         </ul>
     </nav>
     <section class="hero">
-        <div class="s">Dudes will see this and say hell yeah</div>
+        <div class="bio-container">
+            <p>Hi, I'm Aidan!</p>
+            <p>I'm a 21 year-old developer and writer studying MIS and CS @ UGA with a Certificate in Data Science.</p>
+            <p>I'm working to build others' optimism for a brighter future and hopefully make one as a result.</p>
+            </div>
         <div class="image-container">
             <img src = "my-headshot.jpg">
             </div>
-        <div class="bio-container">
+        <div class="resume-button-container">
+            <div class="resume-call-to-action">
+                <button href="">Resume</button>
             </div>
+        </div>
     </section>
     <div class="content"></div>
     <div class="content">
