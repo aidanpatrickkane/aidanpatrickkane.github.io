@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aidan's Projects</title>
+    <style>
+        body {
+            margin: 0; /* Remove default body margin */
+            background-color: #f9fafc;
+            font-family: 'Open-Sans', sans-serif;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        nav {
+            display: flex;
+            justify-content: flex-end;
+            background-color: transparent; /* Example background color */
+            color: gray;          /* Example text color */
+            padding: 15px 0;       /* Add padding for spacing */
+            text-align: center;    /* Center the navigation items */
+            margin-right: 15px;
+        }
+
+        nav ul {
+            list-style: none;   /* Remove bullet points */
+            padding: 0;         /* Remove default padding */
+            margin: 0;          /* Remove default margin */
+        }
+
+        nav li {
+            display: inline;    /* Make list items display horizontally */  
+            margin: 0 10px;     /* Add space between items */
+        }
+
+        nav a {
+            color: black;           /* Example link color */
+            text-decoration: none;  /* Remove underline */
+            font-family: 'Open Sans', sans-serif;
+            font-family: 700;
+            font-size: 15px;
+        }
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+        .card {
+            width: calc(50% - 10px);
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+            background-color: #fff;
+        }
+        .card h2 {
+            margin: 0;
+            padding: 16px;
+            background-color: #f7f7f7;
+            border-bottom: 1px solid #ddd;
+            font-size: 1.2em;
+            text-align: center;
+        }
+        .card img {
+            width: 100%;
+            display: block;
+        }
+        .card p {
+            padding: 0 16px 16px;
+            margin: 0;
+        }
+
+        /* Responsive layout for smaller screens */
+        @media (max-width: 600px) {
+            .card {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="projects.html">Software Projects</a></li>
+            <li><a href="https://github.com/aidanpatrickkane/aidanpatrickkane.github.io/blob/main/AK-up-to-date-Resume.pdf" target="_blank">Resume</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Favorite Content</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <!-- Row 1 -->
+        <div class="row">
+            <!-- Card 1 -->
+            <div class="card">
+                <h2>Ainobodygotimefothat</h2>
+                <iframe width="600" height="315" src="https://www.youtube.com/embed/MMFiX7Hjg8g" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <p>Short description of Project 1...</p>
+            </div>
+            <!-- Card 2 -->
+            <div class="card">
+                <h2>Project Name 2</h2>
+                <img src="demo2.gif" alt="Demo for Project 2" class="demo-gif">
+                <p>Short description of Project 2...</p>
+            </div>
+        </div>
+
+        <!-- Row 2 -->
+        <div class="row">
+            <!-- Card 3 -->
+            <div class="card">
+                <h2>Project Name 3</h2>
+                <img src="demo3.gif" alt="Demo for Project 3" class="demo-gif">
+                <p>Short description of Project 3...</p>
+            </div>
+            <!-- Card 4 -->
+            <div class="card">
+                <h2>Project Name 4</h2>
+                <img src="demo4.gif" alt="Demo for Project 4" class="demo-gif">
+                <p>Short description of Project 4...</p>
+            </div>
+        </div>
+
+        <!-- Additional rows and cards as needed... -->
+
+    </div>
+
+</body>
+</html>
