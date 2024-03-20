@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Software Projects</title>
+    <style>
+        body {
+            margin: 0; /* Remove default body margin */
+            background-color: #f9fafc;
+            font-family: 'Open-Sans', sans-serif;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        nav {
+            display: flex;
+            justify-content: flex-end;
+            background-color: transparent; /* Example background color */
+            color: gray;          /* Example text color */
+            padding: 15px 0;       /* Add padding for spacing */
+            text-align: center;    /* Center the navigation items */
+            margin-right: 15px;
+        }
+
+        nav ul {
+            list-style: none;   /* Remove bullet points */
+            padding: 0;         /* Remove default padding */
+            margin: 0;          /* Remove default margin */
+        }
+
+        nav li {
+            display: inline;    /* Make list items display horizontally */  
+            margin: 0 10px;     /* Add space between items */
+        }
+
+        nav a {
+            color: black;           /* Example link color */
+            text-decoration: none;  /* Remove underline */
+            font-family: 'Open Sans', sans-serif;
+            font-family: 700;
+            font-size: 15px;
+        }
+        div.name-container {
+            text-align: center;
+            font-family: Georgia, Times, 'Times New Roman', serif;
+            margin-top: 5vh;
+            margin-bottom: 10vh;
+            font-size: 24px;
+        }
+        div.link-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        div.link-container a {
+            text-decoration: none;
+            color: inherit;
+            display: inline-flex;
+            flex: 0 1 auto;
+        }
+        .card {
+            border: 1px solid #ddd;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            width: 300px;
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: scale(1.05);
+            cursor: pointer;
+        }
+        .card img {
+            width: 100%; /* Make image width fill the card */
+            height: auto; /* Maintain aspect ratio */
+            display: block; /* Remove any extra space below the image */
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="projects.html">Software Projects</a></li>
+            <li><a href="website-projects.html">Website Projects</a></li>
+            <li><a href="https://github.com/aidanpatrickkane/aidanpatrickkane.github.io/blob/main/AK-up-to-date-Resume.pdf" target="_blank">Resume</a></li>
+            <!---- <li><a href="#">Blog</a></li> ---->
+            <!----<li><a href="#">Favorite Content</a></li>---->
+        </ul>
+    </nav>
+
+    <div class="name-container">
+        <h1 class="title">My Websites</h1>
+    </div>
+    <section>
+        <div class="link-container">
+            <a href="https://oakhillspeech.com/">
+                <div class="card">
+                    <img src="Screenshot 2024-03-20 at 7.01.16 PM.png">
+                </div>
+            </a>
+            <a href="https://www.freshhousefoods.com/">
+                <div class="card">
+                    <img src="thelogo.png">
+                </div>
+            </a>
+            <a href="https://zach-schwartzmans-portfolio-website.webflow.io">
+                <div class="card">
+                    <img src="Screenshot 2024-03-20 at 7.07.00 PM.png">
+                </div>
+            </a>
+        </div>
+    </section>
+
+</body>
+</html>
