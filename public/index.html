@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <link rel="icon" type="image/png" href="Screenshot 2024-03-20 at 7.44.00 PM.png">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap"> 
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            margin: 0; /* Remove default body margin */
+            background-color: #f9fafc;
+        }
+
+        nav {
+            display: flex;
+            justify-content: flex-end;
+            background-color: transparent; /* Example background color */
+            color: gray;          /* Example text color */
+            padding: 15px 0;       /* Add padding for spacing */
+            text-align: center;    /* Center the navigation items */
+            margin-right: 15px;
+        }
+
+        nav ul {
+            list-style: none;   /* Remove bullet points */
+            padding: 0;         /* Remove default padding */
+            margin: 0;          /* Remove default margin */
+        }
+
+        nav li {
+            display: inline;    /* Make list items display horizontally */  
+            margin: 0 10px;     /* Add space between items */
+        }
+
+        nav a {
+            color: black;           /* Example link color */
+            text-decoration: none;  /* Remove underline */
+            font-family: 'Open Sans', sans-serif;
+            font-family: 700;
+            font-size: 15px;
+        }
+
+        section.hero {
+            display: flex;
+            justify-content: center; 
+            align-items: center;
+            width: 100%;
+            height: 90vh;
+            margin-bottom: 50px;
+        }
+        div.image-container {
+            width: 450px;
+            height: 450px;
+            border-radius: 4%;
+            overflow: hidden; /* hides image overflow */
+            margin-left: 30px; /* space between image and bio */
+        }
+        div.image-container img {
+            width: 100%;
+            height: 100%;
+        }
+        div.bio-container {
+            width: 40%;
+            height: 70%;
+            text-align: left;
+            padding: 20px;
+        }
+        @media (max-width: 885px) {
+            section.hero {
+                flex-direction: column;
+                height: auto;
+            }
+            div.image-container {
+                margin-left: 0;
+                width: 80%;
+                height: auto;
+            }
+            div.bio-container {
+                width: auto;
+                margin: 0;
+            }
+            div.bio-container p {
+                text-align: center;
+            }
+        }
+        div.bio-container p:first-child { /* Target the first paragraph */
+            font-size: 40px; /* Adjust as needed */
+            font-weight: bold; /* Adjust as needed */
+            line-height: 1.5; /* Adjust as needed */
+            margin-bottom: 10px; /* Add space between paragraphs */
+        }
+        div.bio-container p:nth-child(2) { /* Target remaining paragraphs */ 
+            font-size: 30px; /* Adjust as needed */
+            font-weight: normal; /* Adjust as needed */
+            line-height: 1.5; /* Adjust as needed */
+        }
+        div.bio-container p:nth-child(3) {
+            font-size: 20px; /* Adjust as needed */
+            font-weight: normal; /* Adjust as needed */
+            line-height: 1.5; /* Adjust as needed */
+        }
+        .button-29 {
+            align-items: center;
+            appearance: none;
+            background-image: radial-gradient(100% 100% at 100% 0, rgb(0, 251, 255) 0, #5468ff 100%);
+            border: 0;
+            border-radius: 6px;
+            box-shadow: rgba(45, 35, 66, .4) 0 2px 4px,rgba(45, 35, 66, .3) 0 7px 13px -3px,rgba(58, 65, 111, .5) 0 -3px 0 inset;
+            box-sizing: border-box;
+            color: #fff;
+            cursor: pointer;
+            display: inline-flex;
+            font-family: "JetBrains Mono",monospace;
+            height: 48px;
+            justify-content: center;
+            line-height: 1;
+            list-style: none;
+            overflow: hidden;
+            padding-left: 16px;
+            padding-right: 16px;
+            position: relative;
+            text-align: left;
+            text-decoration: none;
+            transition: box-shadow .15s,transform .15s;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            white-space: nowrap;
+            will-change: box-shadow,transform;
+            font-size: 18px;
+            }
+
+            .button-29:focus {
+            box-shadow: #3c4fe0 0 0 0 1.5px inset, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+            }
+
+            .button-29:hover {
+            box-shadow: rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+            transform: translateY(-2px);
+            }
+
+            .button-29:active {
+            box-shadow: #3c4fe0 0 3px 7px inset;
+            transform: translateY(2px);
+        }
+        .resume-call-to-action {
+            display: flex;
+            justify-content: center;
+        }
+        .email-form {
+            text-align: center; /* Center the form contents */
+        }
+
+        .email-form input[type="email"] {
+            width: 300px;
+            height: 40px;
+            padding: 0 15px;
+            margin-right: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .email-sender-button {
+            height: 40px;
+            padding: 0 20px;
+            font-size: 16px;
+            background-color: #1877bf;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .email-sender-button:hover {
+            background-color: #176bab;
+            transform: translateY(0.5px);
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="projects.html">Software Projects</a></li>
+            <li><a href="website-projects.html">Website Projects</a></li>
+            <li><a href="https://github.com/aidanpatrickkane/aidanpatrickkane.github.io/blob/main/AK-up-to-date-Resume.pdf" target="_blank">Resume</a></li>
+            <!---- <li><a href="#">Blog</a></li> ---->
+            <!----<li><a href="#">Favorite Content</a></li>---->
+        </ul>
+    </nav>
+    <section class="hero">
+            <div class="bio-container">
+                <p>Hi, I'm Aidan!</p>
+                <p>I'm a 21 year-old developer and writer studying MIS and CS @ UGA with a Certificate in Data Science.</p>
+                <p>I'm working to build others' optimism for a brighter future and hopefully make one as a result. Right now, I'm running a web development service -- feel free to reach out for more info!</p>
+                 <div class="email-form">
+                    <form action="https://formspree.io/f/xrgnagzg" method="POST">
+                        <input type="email" name="email" placeholder="Email Address" required>
+                        <button type="submit" class="email-sender-button" role="button">Send</button>
+                    </form>
+                </div>
+            </div>
+            <div class="image-container">
+                <img src = "my-headshot.jpg">
+            </div>
+    </section>
+    <div class="content"></div>
+    <div class="content">
+        </div>
+</body>
+</html>
