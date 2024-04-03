@@ -3,13 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Favorite Content Directory</title>
     <style>
-        .content {
-            max-width: 800px; /* Adjust the max-width as needed */
-            margin: auto;
-            text-align: center; /* This centers the text of all elements inside .content */
-        }
         body {
             margin: 0; /* Remove default body margin */
             background-color: #f9fafc;
@@ -43,34 +38,40 @@
             font-family: 700;
             font-size: 15px;
         }
-        div.link-container {
+        /* Directory Styles */
+        .directory-container {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
         }
-        div.link-container a {
-            text-decoration: none;
-            color: inherit;
-            display: inline-flex;
-            flex: 0 1 auto;
+
+        .directory {
+            width: 80%; /* Directory width */
+            max-width: 600px; /* Max directory width */
+            margin: 20px auto; /* Center directory */
+            padding: 20px; /* Padding inside the directory box */
+            background-color: #ffffff; /* Background color for directory */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Add shadow for depth */
+            border-radius: 8px; /* Rounded corners */
         }
-        .card {
-            border: 1px solid #ddd;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            overflow: hidden;
-            width: 300px;
-            transition: transform 0.3s ease;
+
+        .directory-header {
+            font-size: 24px; /* Header font size */
+            color: #333; /* Header text color */
+            margin-bottom: 15px; /* Space below header */
         }
-        .card:hover {
-            transform: scale(1.05);
-            cursor: pointer;
+
+        .content-link {
+            display: block; /* Make each link take up full width */
+            margin: 10px 0; /* Space between links */
+            color: #007BFF; /* Link color */
+            text-decoration: none; /* Remove underline */
+            font-size: 18px; /* Link font size */
         }
-        .card img {
-            width: 100%; /* Make image width fill the card */
-            height: auto; /* Maintain aspect ratio */
-            display: block; /* Remove any extra space below the image */
+
+        .content-link:hover {
+            text-decoration: underline; /* Underline on hover */
         }
     </style>
 </head>
@@ -82,24 +83,16 @@
             <li><a href="/website-projects.html">Website Projects</a></li>
             <li><a href="https://github.com/aidanpatrickkane/aidanpatrickkane.github.io/blob/main/AK-up-to-date-Resume.pdf" target="_blank">Resume</a></li>
             <!---- <li><a href="#">Blog</a></li> ---->
-            <li><a href="public/golden-goose/golden-goose.html">Favorite Content</a></li>
+            <li><a href="/public/golden-goose/golden-goose.html">Favorite Content</a></li>
         </ul>
     </nav>
-<div class="content">
-    <h1>What you'll find here -></h1>
-    <br>
-    <div class="manifesto">
-        <h1>20-30 minute commitments</h1>
-    </div>
-    <section>
-        <div class="link-container">
-            <a href="">
-                <div class="card">
-                    <img src="">
-                </div>
-            </a>
+
+    <div class="directory-container">
+        <div class="directory">
+            <h2 class="directory-header">Poems</h2>
+            <!-- Dynamically add links here -->
+            <a href="icecream-people.html" class="content-link">Icecream People by Charles Bukowski</a>
+            <!-- Add more 5-minute content links as you curate them -->
         </div>
-    </section>
-</div>
 </body>
 </html>
