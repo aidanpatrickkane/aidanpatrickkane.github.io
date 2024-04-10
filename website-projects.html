@@ -71,11 +71,14 @@
             flex: 0 1 auto;
         }
         .card {
+            display: flex;
+            align-content: center;
             border: 1px solid #ddd;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
             overflow: hidden;
             width: 300px;
+            height: 300px;
             transition: transform 0.3s ease;
         }
         .card:hover {
@@ -84,7 +87,8 @@
         }
         .card img {
             width: 100%; /* Make image width fill the card */
-            height: auto; /* Maintain aspect ratio */
+            height: 100%; /* Maintain aspect ratio */
+            object-fit: contain;
             display: block; /* Remove any extra space below the image */
         }
     </style>
@@ -107,6 +111,11 @@
     </div>
     <section>
         <div class="link-container">
+            <a href="https://philanthropy-fresh-70aead.webflow.io/">
+                <div class="card">
+                    <img src="better-logo.webp">
+                </div>
+            </a>
             <a href="https://zach-schwartzmans-portfolio-website.webflow.io">
                 <div class="card">
                     <img src="Screenshot 2024-03-20 at 7.07.00 PM.png">
@@ -117,19 +126,14 @@
                     <img src="Screenshot 2024-03-20 at 7.01.16 PM.png">
                 </div>
             </a>
-            <a href="https://www.freshhousefoods.com/">
-                <div class="card">
-                    <img src="thelogo.png">
-                </div>
-            </a>
             <a href="https://updawg-7738eb.webflow.io/">
                 <div class="card">
                     <img src="updawg-again copy.webp">
                 </div>
             </a>
-            <a href="https://philanthropy-fresh-70aead.webflow.io/">
+            <a href="https://www.freshhousefoods.com/">
                 <div class="card">
-                    <img src="better-logo.webp">
+                    <img src="thelogo.png">
                 </div>
             </a>
         </div>
