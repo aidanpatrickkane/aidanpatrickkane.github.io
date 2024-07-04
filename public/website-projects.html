@@ -13,12 +13,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Website Projects</title>
-    <link rel="icon" type="image/png" href="Screenshot 2024-03-20 at 7.44.00 PM.png">
+    <link rel="icon" type="image/png" href="../Screenshot 2024-03-20 at 7.44.00 PM.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0; /* Remove default body margin */
-            background-color: #f9fafc;
-            font-family: 'Open-Sans', sans-serif;
+            background-color: black;
+            color: white;
+            font-family: 'Inter', sans-serif;
             padding: 0;
             box-sizing: border-box;
         }
@@ -27,7 +29,7 @@
             display: flex;
             justify-content: flex-end;
             background-color: transparent; /* Example background color */
-            color: gray;          /* Example text color */
+            color: white;          /* Example text color */
             padding: 15px 0;       /* Add padding for spacing */
             text-align: center;    /* Center the navigation items */
             margin-right: 15px;
@@ -45,15 +47,13 @@
         }
 
         nav a {
-            color: black;           /* Example link color */
+            color: white;           /* Example link color */
             text-decoration: none;  /* Remove underline */
-            font-family: 'Open Sans', sans-serif;
             font-family: 700;
             font-size: 15px;
         }
         div.name-container {
             text-align: center;
-            font-family: Georgia, Times, 'Times New Roman', serif;
             margin-top: 5vh;
             margin-bottom: 10vh;
             font-size: 24px;
@@ -68,18 +68,19 @@
             text-decoration: none;
             color: inherit;
             display: inline-flex;
+            flex-direction: column;
             flex: 0 1 auto;
+            width: 25%;
+            height: auto;
+            min-width: 250px;
         }
         .card {
             display: flex;
             align-content: center;
-            border: 1px solid #ddd;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
             overflow: hidden;
-            width: 300px;
-            height: 300px;
-            transition: transform 0.3s ease;
+            transition: transform 0.25s ease;
+            background-color: black;
         }
         .card:hover {
             transform: scale(1.05);
@@ -94,13 +95,36 @@
         #big-roofs {
             background: linear-gradient(to bottom, black, #0e243a);
         }
+        .card-text-container h2,
+        .card-text-container p {
+            margin: 0px;
+            padding: 0px;
+        }
+        .card-text-container h2 {
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+        .card-text-container {
+            text-align: center;
+        }
+        @media (max-width: 720px) {
+            .link-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 100vw;
+            }
+            .link-container a {
+                margin-bottom: 20px;
+            }
+        }
     </style>
 </head>
 <body>
 
     <nav>
         <ul>
-            <li><a href="index.html">Home</a></li>
+            <li><a href="../index.html">Home</a></li>
             <li><a href="projects.html">Software Projects</a></li>
             <li><a href="website-projects.html">Website Projects</a></li>
             <li><a href="https://github.com/aidanpatrickkane/aidanpatrickkane.github.io/blob/main/AK-up-to-date-Resume%20(1)%20copy.pdf" target="_blank">Resume</a></li>
@@ -116,22 +140,47 @@
         <div class="link-container">
             <a href="https://bigroofspodcast.com">
                 <div class="card" id="big-roofs">
-                    <img src="/public/images/big-roofs-logo.png">
+                    <img src="../Big Roofs Episodes (1) copy.png">
+                </div>
+                <div class="card-text-container">
+                    <h2>Big Roofs Podcast</h2>
+                    <p>June 2024</p>
                 </div>
             </a>
-            <a href="https://zach-schwartzmans-portfolio-website.webflow.io">
+            <a href="https://ca-autographs.com">
+                <div class="card" style="background-color: white;">
+                    <img src="../ca.png">
+                </div>
+                <div class="card-text-container">
+                    <h2>CA Autographs</h2>
+                    <p>May 2024</p>
+                </div>
+            </a>
+            <a href="https://mitchharris.com">
+                <div class="card" style="background-color: white;">
+                    <img src="../better-mitch-harris.png">
+                </div>
+                <div class="card-text-container">
+                    <h2>Mitch Harris</h2>
+                    <p>May 2024</p>
+                </div>
+            </a>
+            <a href="https://scoutbusiness.com">
                 <div class="card">
-                    <img src="../Screenshot 2024-03-20 at 7.07.00 PM.png">
+                    <img src="../Screen+Shot+2024-04-26+at+7.04.47+PM.png">
+                </div>
+                <div class="card-text-container">
+                    <h2>Scout M&A Advisory</h2>
+                    <p>April 2024</p>
                 </div>
             </a>
             <a href="https://oakhillspeech.com/">
-                <div class="card">
+                <div class="card" style="background-color: white;">
                     <img src="../Screenshot 2024-03-20 at 7.01.16 PM.png">
                 </div>
-            </a>
-            <a href="https://updawg-7738eb.webflow.io/">
-                <div class="card">
-                    <img src="../updawg-again copy.webp">
+                <div class="card-text-container">
+                    <h2>Oak Hill Speech Therapy</h2>
+                    <p>July 2023</p>
                 </div>
             </a>
         </div>
