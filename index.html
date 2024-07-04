@@ -60,15 +60,15 @@
         }
         div.image-container {
             width: 450px;
-            border-radius: 4%;
+            border-radius: 20px;
             overflow: hidden; /* hides image overflow */
             margin-left: 30px; /* space between image and bio */
-            height: auto;
             margin-bottom: 20px;
         }
         div.image-container img {
             width: 100%;
             height: auto;
+            display: block;
         }
         div.bio-container {
             width: 40%;
@@ -156,14 +156,17 @@
             background-color: #176bab;
             transform: translateY(0.5px);
         }
-        .currently-working-on {
+        .currently-working-on-section {
             width: 80%;
             margin: 0 auto;
             display: flex;
             flex-direction: column;
+            position: relative;
+            top: -120px;
         }
         .working-on-container {
             width: 100%;
+            text-align: center;
         }
         .what-im-doing-link {
             color: #38b8f9;
@@ -171,6 +174,11 @@
         }
         .what-im-doing-link:hover {
             color: #266bed;
+        }
+        @media (max-width: 1130px) {
+            .currently-working-on-section {
+                top: 0px;
+            }
         }
     </style>
 </head>
@@ -201,7 +209,7 @@
                 <img src = "/public/images/my-headshot.jpg">
             </div>
     </section>
-    <section class="currently-working-on">
+    <section class="currently-working-on-section">
         <div class="working-on-container">
             <h2>What I'm Doing with My Time</h2>
             <h3>Building the solution to social media</h3>
