@@ -110,18 +110,21 @@
             color: #266bed;
             text-decoration: none;
         }
-        div.bio-container h1 { /* Target the first paragraph */
+        h1 { /* Target the first paragraph */
             font-size: 64px; /* Adjust as needed */
             font-weight: bold; /* Adjust as needed */
             line-height: 1.5; /* Adjust as needed */
             margin-bottom: 10px; /* Add space between paragraphs */
         }
-        div.bio-container h2 { /* Target remaining paragraphs */ 
+        h2 { /* Target remaining paragraphs */ 
             font-size: 28px;
             line-height: 1.4;
             margin-bottom: 10px;
         }
-        div.bio-container p {
+        .working-on-container h3 {
+            text-align: center;
+        }
+        p {
             font-size: 18px;
             line-height: 1.5;
             margin-bottom: 10px;
@@ -153,6 +156,22 @@
             background-color: #176bab;
             transform: translateY(0.5px);
         }
+        .currently-working-on {
+            width: 80%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+        }
+        .working-on-container {
+            width: 100%;
+        }
+        .what-im-doing-link {
+            color: #38b8f9;
+            text-decoration: none;
+        }
+        .what-im-doing-link:hover {
+            color: #266bed;
+        }
     </style>
 </head>
 <body>
@@ -170,7 +189,7 @@
             <div class="bio-container">
                 <h1>Hi, I'm Aidan!</h1>
                 <h2>I'm a 21 year-old student studying MIS and CS @ UGA.</h2>
-                <p>I'm working to build a better and cooler world. Learn more about how by reading below. Right now, I'm working hard to build beautiful websites for great businesses -- feel free to <a style="display: hidden;" class="reach-out-cta" href="https://www.linkedin.com/in/aidan-kane-3a8b1421a/">reach out</a> for more info!</p>
+                <p>I'm working to build a better and cooler world. Learn more about how by reading below. Right now, I'm working hard to build beautiful websites for great businesses -- feel free to <a class="what-im-doing-link" href="https://www.linkedin.com/in/aidan-kane-3a8b1421a/">reach out</a> for more info!</p>
                  <div class="email-form">
                     <form action="https://formspree.io/f/xrgnagzg" method="POST">
                         <input type="email" name="email" placeholder="Email Address" required>
@@ -181,6 +200,16 @@
             <div class="image-container">
                 <img src = "/public/images/my-headshot.jpg">
             </div>
+    </section>
+    <section class="currently-working-on">
+        <div class="working-on-container">
+            <h2>What I'm Doing with My Time</h2>
+            <h3>Building the solution to social media</h3>
+            <h3>Interning at <a href="https://useproline.com" class="what-im-doing-link">ProLine</a></h3>
+            <h3>Working on <a class="what-im-doing-link" href="/public/website-projects.html">awesome websites</a></h3>
+            <h3>Learning VR Development</h3>
+            <h3>Reading a whole mess of <a class="what-im-doing-link" href="https://www.amazon.com/Freakonomics-Economist-Explores-Hidden-Everything/dp/0060731338">cool books</a></h3>
+        </div>
     </section>
 </body>
 </html>
