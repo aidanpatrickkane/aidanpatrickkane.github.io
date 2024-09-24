@@ -22,6 +22,10 @@
             font-family: 'Inter', sans-serif;
             padding: 0;
             box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
         nav {
@@ -53,13 +57,15 @@
             font-size: 15px;
         }
         .cards-container {
-            width: 100%;
+            width: 90%;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
+            align-items: center;
         }
         .card {
-            width: 600px;
-            margin: 20px 0px;
+            width: fit-content;
+            height: 475px;
+            margin: 20px;
             border-radius: 4px;
             overflow: hidden;
             background-color: #fff;
@@ -78,7 +84,7 @@
         }
 
         /* Responsive layout for smaller screens */
-        @media (max-width: 650px) {
+        @media (max-width: 850px) {
             .card {
                 width: 300px;
                 height: auto;
@@ -87,6 +93,10 @@
             iframe {
                 width: 300px;
                 height: 157.5px;
+            }
+
+            .cards-container {
+                flex-direction: column;
             }
         }
     </style>
@@ -106,6 +116,11 @@
     </nav>
 
     <div class="cards-container">
+        <div class="card">
+            <h2>Aidan Intelligence</h2>
+            <iframe width="600" height="315" src="https://www.youtube.com/embed/PnOhU7dLNQg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <p style="line-height: 1.4;">My Raspberry Pi-powered voice assistant. </p>
+        </div>
         <div class="card">
             <h2>TLDRead</h2>
             <iframe width="600" height="315" src="https://www.youtube.com/embed/h1lovpyKMp4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
