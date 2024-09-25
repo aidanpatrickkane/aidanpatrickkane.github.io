@@ -60,15 +60,15 @@
             width: 90%;
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: stretch;
         }
         .card {
-            width: fit-content;
-            height: 475px;
+            width: 45%;
             margin: 20px;
             border-radius: 4px;
             overflow: hidden;
             background-color: #fff;
+            flex-direction: column;
         }
         .card h2 {
             margin: 0;
@@ -81,6 +81,21 @@
             text-align: center;
             padding: 16px;
             margin: 0;
+            flex-grow: 1;
+        }
+
+        iframe {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 16 / 9;
+            max-width: 100%;
+        }
+
+        #awefactor-backdrop {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #38b8f9;
         }
 
         /* Responsive layout for smaller screens */
@@ -91,12 +106,13 @@
             }
 
             iframe {
-                width: 300px;
-                height: 157.5px;
+                width: 100%;
+                height: auto;
             }
 
             .cards-container {
                 flex-direction: column;
+                align-items: center;
             }
         }
     </style>
@@ -118,14 +134,21 @@
     <div class="cards-container">
         <div class="card">
             <h2>Aidan Intelligence</h2>
-            <iframe width="600" height="315" src="https://www.youtube.com/embed/PnOhU7dLNQg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/PnOhU7dLNQg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             <p style="line-height: 1.4;">My Raspberry Pi-powered voice assistant. </p>
         </div>
         <div class="card">
             <h2>TLDRead</h2>
-            <iframe width="600" height="315" src="https://www.youtube.com/embed/h1lovpyKMp4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            <p style="line-height: 1.4;">Ask any question about an article on your page and have it answered. <br>@arc browser - pay me</p>
+            <iframe src="https://www.youtube.com/embed/h1lovpyKMp4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <p style="line-height: 1.4;">Ask any question about an article on your page and have it answered.</p>
         </div>
+        <!-- <div class="card">
+            <h2>Awefactor</h2>
+            <div id="awefactor-backdrop">
+                <img src="../logo.png" alt="my logo">
+            </div>
+            <p style="line-height: 1.4;">Ask any question about an article on your page and have it answered.</p>
+        </div> -->
     </div>
 </body>
 </html>
