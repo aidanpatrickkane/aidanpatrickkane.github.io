@@ -17,7 +17,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            margin: 0; /* Remove default body margin */
+            margin: 0;
             background-color: black;
             font-family: 'Inter', sans-serif;
             padding: 0;
@@ -29,6 +29,7 @@
         }
 
         nav {
+            align-self: flex-end;
             display: flex;
             justify-content: flex-end;
             background-color: transparent; /* Example background color */
@@ -59,6 +60,7 @@
         .cards-container {
             width: 90%;
             display: flex;
+            flex-wrap: wrap;
             justify-content: space-between;
             align-items: stretch;
         }
@@ -68,7 +70,6 @@
             border-radius: 4px;
             overflow: hidden;
             background-color: #fff;
-            flex-direction: column;
         }
         .card h2 {
             margin: 0;
@@ -99,15 +100,10 @@
         }
 
         /* Responsive layout for smaller screens */
-        @media (max-width: 850px) {
+        @media (max-width: 950px) {
             .card {
-                width: 300px;
-                height: auto;
-            }
-
-            iframe {
-                width: 100%;
-                height: auto;
+                width: 85%;
+                margin: 10px 0;
             }
 
             .cards-container {
@@ -126,8 +122,6 @@
             <li><a href="website-projects.html">Website Projects</a></li>
             <li><a href="../index.html">Contact</a></li>
             <li><a href="https://github.com/aidanpatrickkane/aidanpatrickkane.github.io/blob/main/AK-up-to-date-Resume%20(1)%20copy.pdf" target="_blank">Resume</a></li>
-            <!--- <li><a href="writings.html">Writings</a></li>
-            <li><a href="golden-goose/golden-goose.html">Favorite Content</a></li> --->
         </ul>
     </nav>
 
@@ -142,13 +136,13 @@
             <iframe src="https://www.youtube.com/embed/h1lovpyKMp4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             <p style="line-height: 1.4;">Ask any question about an article on your page and have it answered.</p>
         </div>
-        <!-- <div class="card">
+        <div class="card">
             <h2>Awefactor</h2>
             <div id="awefactor-backdrop">
                 <img src="../logo.png" alt="my logo">
             </div>
             <p style="line-height: 1.4;">Ask any question about an article on your page and have it answered.</p>
-        </div> -->
+        </div>
     </div>
 </body>
 </html>
