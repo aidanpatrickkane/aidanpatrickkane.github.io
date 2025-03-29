@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aidan's Moodboard</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: black;
+      color: white;
+      font-family: 'Inter', sans-serif;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    nav {
+      display: flex;
+      justify-content: flex-end;
+      background-color: transparent;
+      color: white;
+      padding: 15px 0;
+      text-align: center;
+      margin-right: 15px;
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    nav li {
+      display: inline;
+      margin: 0 10px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      padding: 20px;
+    }
+
+    .grid img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      object-fit: cover;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="projects.html">Software Projects</a></li>
+      <li><a href="website-projects.html">Website Projects</a></li>
+      <li><a href="mystuff.html">My Stuff</a></li>
+      <li><a href="https://www.medium.com/@kaneaidan12">Writings</a></li>
+      <li><a href="../index.html">Contact</a></li>
+      <li><a href="https://github.com/aidanpatrickkane/aidanpatrickkane.github.io/blob/main/1-28-Resume%20copy.pdf" target="_blank">Resume</a></li>
+    </ul>
+  </nav>
+
+  <div class="grid" id="moodboard"></div>
+
+  <script>
+    async function fetchImages() {
+      const res = await fetch("https://beforreal-k3itvoqaj-aidans-projects-e5f3f09f.vercel.app/get-images");
+      const images = await res.json();
+      const grid = document.getElementById("moodboard");
+
+      images.forEach(img => {
+        const image = document.createElement("img");
+        image.src = img.imageUrl;
+        grid.appendChild(image);
+      });
+    }
+
+    fetchImages();
+  </script>
+</body>
+</html>
