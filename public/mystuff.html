@@ -110,6 +110,15 @@
       box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
     }
 
+    #lightbox video {
+      max-width: 90%;
+      max-height: 80%;
+      border-radius: 8px;
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+      display: none;
+    }
+
+
   </style>
 </head>
 <body>
@@ -128,7 +137,8 @@
   <div class="grid" id="moodboard"></div>
 
   <div id="lightbox">
-    <img src="" alt="Enlarged image" />
+    <img id="lightbox-img" src="" alt="Enlarged image" />
+    <video id="lightbox-video" loop autoplay muted playsinline></video>
   </div>  
 
   <script>
@@ -167,16 +177,38 @@
 
     // Lightbox logic
     const lightbox = document.getElementById("lightbox");
-    const lightboxImg = lightbox.querySelector("img");
+    const lightboxImg = document.getElementById("lightbox-img");
+    const lightboxVideo = document.getElementById("lightbox-video");
+
+    // Prevent clicks inside the media from closing the lightbox
+    lightboxImg.addEventListener("click", (e) => e.stopPropagation());
+    lightboxVideo.addEventListener("click", (e) => e.stopPropagation());
 
     document.addEventListener("click", (e) => {
-      if (e.target.classList.contains("clickable-image")) {
+      const isImage = e.target.tagName === "IMG" && e.target.closest(".grid");
+      const isVideo = e.target.tagName === "VIDEO" && e.target.closest(".grid");
+
+      if (isImage) {
         lightboxImg.src = e.target.src;
+        lightboxImg.style.display = "block";
+        lightboxVideo.style.display = "none";
         lightbox.style.display = "flex";
-      } else if (e.target === lightbox || e.target === lightboxImg) {
+      } else if (isVideo) {
+        lightboxVideo.src = e.target.src;
+        lightboxVideo.style.display = "block";
+        lightboxImg.style.display = "none";
+        lightbox.style.display = "flex";
+      } else if (
+        e.target === lightbox ||
+        e.target === lightboxImg ||
+        e.target === lightboxVideo
+      ) {
         lightbox.style.display = "none";
+        lightboxVideo.pause();
+        lightboxVideo.currentTime = 0;
       }
     });
+
   </script>
 </body>
 </html>
