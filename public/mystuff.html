@@ -83,6 +83,13 @@
       box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
     }
 
+    .grid video:hover {
+      box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+      transition: box-shadow 0.2s ease;
+      cursor: pointer;
+    }
+
+
     #lightbox {
       position: fixed;
       top: 0;
@@ -127,13 +134,32 @@
   <script>
     async function fetchImages() {
       const res = await fetch("https://beforreal-llc6tw38f-aidans-projects-e5f3f09f.vercel.app/get-images");
-      const images = await res.json();
+      const items = await res.json();
       const grid = document.getElementById("moodboard");
 
-      images.forEach(img => {
-        const image = document.createElement("img");
-        image.src = img.imageUrl;
-        grid.appendChild(image);
+      items.forEach(item => {
+        const isVideo = item.imageUrl.endsWith(".mp4");
+        const media = isVideo
+        ? document.createElement("video")
+        : document.createElement("img");
+        
+        media.src = item.imageUrl;
+        media.style.borderRadius = "6px";
+        media.style.marginBottom = "20px";
+        media.style.width = "100%";
+        media.style.display = "block";
+        media.style.breakInside = "avoid";
+
+        if (isVideo) {
+          media.loop = true;
+          media.autoplay = true;
+          media.muted = true;
+          media.playsInline = true;
+        } else {
+          media.classList.add("clickable-image"); // for lightbox
+        }
+
+        grid.appendChild(media);
       });
     }
 
@@ -144,7 +170,7 @@
     const lightboxImg = lightbox.querySelector("img");
 
     document.addEventListener("click", (e) => {
-      if (e.target.tagName === "IMG" && e.target.closest(".grid")) {
+      if (e.target.classList.contains("clickable-image")) {
         lightboxImg.src = e.target.src;
         lightbox.style.display = "flex";
       } else if (e.target === lightbox || e.target === lightboxImg) {
