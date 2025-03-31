@@ -148,28 +148,41 @@
       const grid = document.getElementById("moodboard");
 
       items.forEach(item => {
-        const isVideo = item.imageUrl.endsWith(".mp4");
-        const media = isVideo
-        ? document.createElement("video")
-        : document.createElement("img");
-        
-        media.src = item.imageUrl;
-        media.style.borderRadius = "6px";
-        media.style.marginBottom = "20px";
-        media.style.width = "100%";
-        media.style.display = "block";
-        media.style.breakInside = "avoid";
-
-        if (isVideo) {
-          media.loop = true;
-          media.autoplay = true;
-          media.muted = true;
-          media.playsInline = true;
+        if (item.type === "youtube") {
+          const iframe = document.createElement("iframe");
+          iframe.src = item.imageUrl.replace("watch?v=", "embed/");
+          iframe.width = "100%";
+          iframe.height = "315";
+          iframe.allowFullscreen = true;
+          iframe.style.borderRadius = "6px";
+          iframe.style.marginBottom = "20px";
+          iframe.style.display = "block";
+          iframe.style.breakInside = "avoid";
+          grid.appendChild(iframe);
         } else {
-          media.classList.add("clickable-image"); // for lightbox
-        }
+          const isVideo = item.imageUrl.endsWith(".mp4");
+          const media = isVideo
+          ? document.createElement("video")
+          : document.createElement("img");
+          
+          media.src = item.imageUrl;
+          media.style.borderRadius = "6px";
+          media.style.marginBottom = "20px";
+          media.style.width = "100%";
+          media.style.display = "block";
+          media.style.breakInside = "avoid";
 
-        grid.appendChild(media);
+          if (isVideo) {
+            media.loop = true;
+            media.autoplay = true;
+            media.muted = true;
+            media.playsInline = true;
+          } else {
+            media.classList.add("clickable-image"); // for lightbox
+          }
+
+          grid.appendChild(media);
+        }
       });
     }
 
