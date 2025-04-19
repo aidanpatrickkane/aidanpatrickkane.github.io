@@ -163,6 +163,10 @@
             const container = document.createElement("div");
             container.innerHTML = item.imageUrl;
             grid.appendChild(container);
+
+            if (window.twttr && twttr.widgets && twttr.widgets.load) {
+              twttr.widgets.load(container);
+            }
         } else {
           const isVideo = item.imageUrl.endsWith(".mp4");
           const media = isVideo
