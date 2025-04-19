@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aidan's Moodboard</title>
+  <title>Superchill</title>
   <link rel="icon" type="image/png" href="../Screenshot 2024-03-20 at 7.44.00 PM.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
   <style>
@@ -127,7 +127,7 @@
       <li><a href="../index.html">Home</a></li>
       <li><a href="projects.html">Software Projects</a></li>
       <li><a href="website-projects.html">Website Projects</a></li>
-      <li><a href="mystuff.html">My Stuff</a></li>
+      <li><a href="mystuff.html">Superchill</a></li>
       <li><a href="https://www.medium.com/@kaneaidan12">Writings</a></li>
       <li><a href="../index.html">Contact</a></li>
       <li><a href="https://github.com/aidanpatrickkane/aidanpatrickkane.github.io/blob/main/1-28-Resume%20copy.pdf" target="_blank">Resume</a></li>
@@ -159,6 +159,8 @@
           iframe.style.display = "block";
           iframe.style.breakInside = "avoid";
           grid.appendChild(iframe);
+        } else if (item.type === "x") {
+          grid.appendChild(item.imageUrl);
         } else {
           const isVideo = item.imageUrl.endsWith(".mp4");
           const media = isVideo
