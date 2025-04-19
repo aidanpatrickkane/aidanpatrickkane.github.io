@@ -160,7 +160,9 @@
           iframe.style.breakInside = "avoid";
           grid.appendChild(iframe);
         } else if (item.type === "x") {
-          grid.appendChild(item.imageUrl);
+            const container = document.createElement("div");
+            container.innerHTML = item.imageUrl;
+            grid.appendChild(container);
         } else {
           const isVideo = item.imageUrl.endsWith(".mp4");
           const media = isVideo
