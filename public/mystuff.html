@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Superchill</title>
-  <link rel="icon" type="image/png" href="../Screenshot 2024-03-20 at 7.44.00 PM.png">
+  <link rel="icon" type="image/png" href="../Screenshot 2024-03-20 at 7.44.00 PM.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
   <style>
@@ -47,36 +47,23 @@
     }
 
     .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      display: flex;
       gap: 20px;
       padding: 30px;
+      align-items: flex-start;
     }
 
-    @media (min-width: 600px) {
-      .grid {
-        column-count: 2;
-      }
-    }
-
-    @media (min-width: 900px) {
-      .grid {
-        column-count: 3;
-      }
-    }
-
-    @media (min-width: 1200px) {
-      .grid {
-        column-count: 4;
-      }
+    .column {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
     }
 
     .grid img {
       width: 100%;
-      margin-bottom: 20px;
       border-radius: 6px;
       display: block;
-      break-inside: avoid;
       transition: box-shadow 0.2s ease;
       cursor: pointer;
     }
@@ -85,12 +72,28 @@
       box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
     }
 
-    .grid video:hover {
-      box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+    .grid video {
+      width: 100%;
+      border-radius: 6px;
+      display: block;
       transition: box-shadow 0.2s ease;
       cursor: pointer;
     }
 
+    .grid video:hover {
+      box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+    }
+
+    .grid iframe {
+      width: 100%;
+      height: 315px;
+      border-radius: 6px;
+      display: block;
+    }
+
+    .grid .twitter-container {
+      width: 100%;
+    }
 
     #lightbox {
       position: fixed;
@@ -120,7 +123,15 @@
       display: none;
     }
 
-
+    /* Responsive column count */
+    @media (max-width: 599px) {
+      .grid {
+        flex-direction: column;
+      }
+      .column {
+        width: 100%;
+      }
+    }
   </style>
 </head>
 <body>
@@ -139,17 +150,45 @@
   <div class="grid" id="moodboard"></div>
 
   <div id="lightbox">
-    <img id="lightbox-img" src="" alt="Enlarged image" />
+    <img id="lightbox-img" src="/placeholder.svg" alt="Enlarged image" />
     <video id="lightbox-video" loop autoplay muted playsinline></video>
   </div>  
 
   <script>
+    function getColumnCount() {
+      const width = window.innerWidth;
+      if (width < 600) return 1;
+      if (width < 900) return 2;
+      if (width < 1200) return 3;
+      return 4;
+    }
+
+    function createColumns(columnCount) {
+      const grid = document.getElementById("moodboard");
+      grid.innerHTML = ''; // Clear existing content
+      
+      const columns = [];
+      for (let i = 0; i < columnCount; i++) {
+        const column = document.createElement('div');
+        column.className = 'column';
+        grid.appendChild(column);
+        columns.push(column);
+      }
+      return columns;
+    }
+
     async function fetchImages() {
       const res = await fetch("https://beforreal-9nmhjpfkx-aidans-projects-e5f3f09f.vercel.app/get-images");
       const items = await res.json();
-      const grid = document.getElementById("moodboard");
-
-      items.forEach(item => {
+      
+      const columnCount = getColumnCount();
+      const columns = createColumns(columnCount);
+      
+      // Distribute items left to right across columns
+      items.forEach((item, index) => {
+        const columnIndex = index % columnCount;
+        const targetColumn = columns[columnIndex];
+        
         if (item.type === "youtube") {
           const iframe = document.createElement("iframe");
           iframe.src = item.imageUrl.replace("watch?v=", "embed/");
@@ -157,30 +196,27 @@
           iframe.height = "315";
           iframe.allowFullscreen = true;
           iframe.style.borderRadius = "6px";
-          iframe.style.marginBottom = "20px";
           iframe.style.display = "block";
-          iframe.style.breakInside = "avoid";
-          grid.appendChild(iframe);
+          targetColumn.appendChild(iframe);
         } else if (item.type === "x") {
-            const container = document.createElement("div");
-            container.innerHTML = item.imageUrl;
-            grid.appendChild(container);
+          const container = document.createElement("div");
+          container.className = "twitter-container";
+          container.innerHTML = item.imageUrl;
+          targetColumn.appendChild(container);
 
-            if (window.twttr && twttr.widgets && twttr.widgets.load) {
-              twttr.widgets.load(container);
-            }
+          if (window.twttr && twttr.widgets && twttr.widgets.load) {
+            twttr.widgets.load(container);
+          }
         } else {
           const isVideo = item.imageUrl.endsWith(".mp4");
           const media = isVideo
-          ? document.createElement("video")
-          : document.createElement("img");
+            ? document.createElement("video")
+            : document.createElement("img");
           
           media.src = item.imageUrl;
           media.style.borderRadius = "6px";
-          media.style.marginBottom = "20px";
           media.style.width = "100%";
           media.style.display = "block";
-          media.style.breakInside = "avoid";
 
           if (isVideo) {
             media.loop = true;
@@ -188,13 +224,27 @@
             media.muted = true;
             media.playsInline = true;
           } else {
-            media.classList.add("clickable-image"); // for lightbox
+            media.classList.add("clickable-image");
           }
 
-          grid.appendChild(media);
+          targetColumn.appendChild(media);
         }
       });
     }
+
+    // Handle window resize to redistribute items
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        const newColumnCount = getColumnCount();
+        const currentColumnCount = document.querySelectorAll('.column').length;
+        
+        if (newColumnCount !== currentColumnCount) {
+          fetchImages(); // Re-fetch and redistribute
+        }
+      }, 250);
+    });
 
     fetchImages();
 
@@ -231,7 +281,6 @@
         lightboxVideo.currentTime = 0;
       }
     });
-
   </script>
 </body>
 </html>
