@@ -7,13 +7,12 @@
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-
         gtag('config', 'G-89SZK30KTZ');
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Portfolio</title>
-    <link rel="icon" type="image/png" href="../Screenshot 2024-03-20 at 7.44.00 PM.png">
+    <link rel="icon" type="image/png" href="../Screenshot 2024-03-20 at 7.44.00 PM.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
@@ -22,65 +21,95 @@
             font-family: 'Inter', sans-serif;
             color: white;
             background: black;
+            overflow-x: hidden;
+        }
+
+        /* Beam spotlight effect */
+        .beam-spotlight {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('ray-of-fun.png');
+            background-size: 120% auto;
+            background-position: center center;
+            background-repeat: no-repeat;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.8;
+            clip-path: circle(150px at 50% 50%);
+            transition: clip-path 0.1s ease-out;
+        }
+
+        /* Ensure main content is above the beam */
+        .main-content {
+            position: relative;
+            z-index: 10;
         }
 
         nav {
             display: flex;
             justify-content: flex-end;
-            background-color: transparent;    
-            padding: 15px 0;       
+            background-color: transparent;
+            padding: 15px 0;
             text-align: center;
             margin-right: 15px;
         }
 
         nav ul {
-            list-style: none;   
-            padding: 0;        
+            list-style: none;
+            padding: 0;
             margin: 0;
         }
 
         nav li {
-            display: inline;    /* Make list items display horizontally */  
-            margin: 0 10px;     /* Add space between items */
+            display: inline;
+            margin: 0 10px;
         }
 
         nav a {
-            color: white;           /* Example link color */
-            text-decoration: none;  /* Remove underline */
+            color: white;
+            text-decoration: none;
             font-family: 'Inter', sans-serif;
             font-size: 15px;
         }
 
         section.hero {
             display: flex;
-            justify-content: center; 
+            justify-content: center;
             align-items: center;
             width: 100%;
             height: 100vh;
         }
+
         div.image-container {
             width: 450px;
             border-radius: 20px;
-            overflow: hidden; /* hides image overflow */
-            margin-left: 30px; /* space between image and bio */
+            overflow: hidden;
+            margin-left: 30px;
             margin-bottom: 20px;
         }
+
         div.image-container img {
             width: 100%;
             height: auto;
             display: block;
         }
+
         div.bio-container {
             width: 40%;
             height: 70%;
             text-align: left;
             padding: 0px 10px;
         }
+
         @media (max-width: 1130px) {
             section.hero {
                 flex-direction: column;
                 height: auto;
             }
+
             div.bio-container {
                 display: flex;
                 flex-direction: column;
@@ -89,41 +118,51 @@
                 align-items: center;
                 margin-bottom: 20px;
             }
+
             div.bio-container h1, h2, p {
                 text-align: center;
             }
+
             .email-form input[type="email"] {
                 display: none;
             }
+
             .email-sender-button {
                 display: none;
             }
+
             .reach-out-cta {
                 color: #266bed;
                 text-decoration: none;
             }
+
             .reach-out-cta:hover {
                 color: white;
             }
         }
+
         .reach-out-cta {
             color: #266bed;
             text-decoration: none;
         }
-        h1 { /* Target the first paragraph */
-            font-size: 64px; /* Adjust as needed */
-            font-weight: bold; /* Adjust as needed */
-            line-height: 1.5; /* Adjust as needed */
-            margin-bottom: 10px; /* Add space between paragraphs */
+
+        h1 {
+            font-size: 64px;
+            font-weight: bold;
+            line-height: 1.5;
+            margin-bottom: 10px;
         }
-        h2 { /* Target remaining paragraphs */ 
+
+        h2 {
             font-size: 28px;
             line-height: 1.4;
             margin-bottom: 10px;
         }
+
         .working-on-container h3 {
             text-align: center;
         }
+
         p {
             font-size: 18px;
             line-height: 1.5;
@@ -156,6 +195,7 @@
             background-color: #176bab;
             transform: translateY(0.5px);
         }
+
         .currently-working-on-section {
             width: 80%;
             margin: 0 auto;
@@ -164,17 +204,21 @@
             position: relative;
             top: -120px;
         }
+
         .working-on-container {
             width: 100%;
             text-align: center;
         }
+
         .what-im-doing-link {
             color: #38b8f9;
             text-decoration: none;
         }
+
         .what-im-doing-link:hover {
             color: #266bed;
         }
+
         @media (max-width: 1130px) {
             .currently-working-on-section {
                 top: 0px;
@@ -183,25 +227,29 @@
     </style>
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="public/projects.html">Software Projects</a></li>
-            <li><a href="public/website-projects.html">Website Projects</a></li>
-            <li><a href="public/mystuff.html">Superchill</a></li>
-            <li><a href="https://www.medium.com/@kaneaidan12">Writings</a></li>
-            <li><a href="index.html">Contact</a></li>
-            <li><a href="https://github.com/aidanpatrickkane/aidanpatrickkane.github.io/blob/main/1-28-Resume%20copy.pdf" target="_blank">Resume</a></li>
-            <!--- <li><a href="public/writings.html">Writings</a></li>
-            <li><a href="public/golden-goose/golden-goose.html">Favorite Content</a></li> --->
-        </ul>
-    </nav>
-    <section class="hero">
+    <!-- Beam spotlight effect -->
+    <div class="beam-spotlight" id="beamSpotlight"></div>
+
+    <!-- Main content wrapper -->
+    <div class="main-content">
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="public/projects.html">Software Projects</a></li>
+                <li><a href="public/website-projects.html">Website Projects</a></li>
+                <li><a href="public/mystuff.html">Superchill</a></li>
+                <li><a href="https://www.medium.com/@kaneaidan12">Writings</a></li>
+                <li><a href="index.html">Contact</a></li>
+                <li><a href="https://github.com/aidanpatrickkane/aidanpatrickkane.github.io/blob/main/1-28-Resume%20copy.pdf" target="_blank">Resume</a></li>
+            </ul>
+        </nav>
+
+        <section class="hero">
             <div class="bio-container">
                 <h1>Hi, I'm Aidan!</h1>
                 <h2>I'm a 21 year-old student studying MIS and CS @ UGA.</h2>
                 <p>I'm working to build a better and cooler world. Learn more about how by reading below. Right now, I'm working hard to build beautiful websites for great businesses -- feel free to <a class="what-im-doing-link" href="https://www.linkedin.com/in/aidan-kane-3a8b1421a/">reach out</a> for more info!</p>
-                 <div class="email-form">
+                <div class="email-form">
                     <form action="https://formspree.io/f/xrgnagzg" method="POST">
                         <input type="email" name="email" placeholder="Email Address" required>
                         <button type="submit" class="email-sender-button" role="button">Send</button>
@@ -209,16 +257,44 @@
                 </div>
             </div>
             <div class="image-container">
-                <img src = "/public/images/my-headshot.jpg">
+                <img src="/public/images/my-headshot.jpg">
             </div>
-    </section>
-    <section class="currently-working-on-section">
-        <div class="working-on-container">
-            <h2>What I'm Doing with My Time</h2>
-            <h3>Building the <a class="what-im-doing-link" href="https://awefactor.us">solution</a> to social media</h3>
-            <h3>Working on <a class="what-im-doing-link" href="/public/website-projects.html">awesome websites</a></h3>
-            <h3>Reading a whole mess of <a class="what-im-doing-link" href="https://www.amazon.com/Rise-of-Theodore-Roosevelt-audiobook/dp/B003TLSM70/ref=sr_1_1?crid=3P4CQPDVPQZSE&dib=eyJ2IjoiMSJ9.VqwHGppD89B3KshLpiJ_K_TPos2uHkGdvIpJhMAcdo6et2gFdATXwVvdrw1je5MRM9mdhaWszo-xqCasjJDbJeRk8rzcVPUKyqaNTZNLbm2ZsyQgJJQ3FYcp-M-xBAtpavyPZXoWc4-1HaTONoIjCvdPr33mzZUO-QO0NyGB6hW-g6XRU9spXhryzM78QqN9zgho627ek1tiW98eCZ8kKUpWpNIoVBcmlJXVgHu9sSE.5VhN6wb6GW6pX_G2qxQch7lNMXmKTw8xgr-2wiWCpy0&dib_tag=se&keywords=the+rise+of+theodore+roosevelt&qid=1727130211&sprefix=the+rise+of+theo%2Caps%2C136&sr=8-1">cool books</a></h3>
-        </div>
-    </section>
+        </section>
+
+        <section class="currently-working-on-section">
+            <div class="working-on-container">
+                <h2>What I'm Doing with My Time</h2>
+                <h3>Building the <a class="what-im-doing-link" href="https://awefactor.us">solution</a> to social media</h3>
+                <h3>Working on <a class="what-im-doing-link" href="/public/website-projects.html">awesome websites</a></h3>
+                <h3>Reading a whole mess of <a class="what-im-doing-link" href="https://www.amazon.com/Rise-of-Theodore-Roosevelt-audiobook/dp/B003TLSM70/ref=sr_1_1?crid=3P4CQPDVPQZSE&dib=eyJ2IjoiMSJ9.VqwHGppD89B3KshLpiJ_K_TPos2uHkGdvIpJhMAcdo6et2gFdATXwVvdrw1je5MRM9mdhaWszo-xqCasjJDbJeRk8rzcVPUKyqaNTZNLbm2ZsyQgJJQ3FYcp-M-xBAtpavyPZXoWc4-1HaTONoIjCvdPr33mzZUO-QO0NyGB6hW-g6XRU9spXhryzM78QqN9zgho627ek1tiW98eCZ8kKUpWpNIoVBcmlJXVgHu9sSE.5VhN6wb6GW6pX_G2qxQch7lNMXmKTw8xgr-2wiWCpy0&dib_tag=se&keywords=the+rise+of+theodore+roosevelt&qid=1727130211&sprefix=the+rise+of+theo%2Caps%2C136&sr=8-1">cool books</a></h3>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Smooth spotlight effect that follows mouse
+        document.addEventListener('DOMContentLoaded', function() {
+            const beamSpotlight = document.getElementById('beamSpotlight');
+            let mouseX = window.innerWidth / 2;
+            let mouseY = window.innerHeight / 2;
+
+            // Initialize spotlight position
+            beamSpotlight.style.clipPath = `circle(150px at ${mouseX}px ${mouseY}px)`;
+
+            // Track mouse movement
+            document.addEventListener('mousemove', function(e) {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                
+                // Update spotlight position with smooth transition
+                beamSpotlight.style.clipPath = `circle(150px at ${mouseX}px ${mouseY}px)`;
+            });
+
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                beamSpotlight.style.clipPath = `circle(150px at ${mouseX}px ${mouseY}px)`;
+            });
+        });
+    </script>
 </body>
 </html>
