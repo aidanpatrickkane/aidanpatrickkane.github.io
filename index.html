@@ -24,25 +24,42 @@
             overflow-x: hidden;
         }
 
-        /* Beam spotlight effect */
-        .beam-spotlight {
+        /* Background beam image - darkened by default */
+        .beam-background {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('ray-of-fun.png');
+            background-image: url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ray-of-fun-BcaYnzR610yZB5DaS8X2PkHxd4j26g.png');
             background-size: 120% auto;
             background-position: center center;
             background-repeat: no-repeat;
             pointer-events: none;
             z-index: 1;
-            opacity: 0.8;
-            clip-path: circle(150px at 50% 50%);
-            transition: clip-path 0.1s ease-out;
+            opacity: 0.15;
         }
 
-        /* Ensure main content is above the beam */
+        /* Spotlight overlay that reveals full brightness */
+        .spotlight-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ray-of-fun-BcaYnzR610yZB5DaS8X2PkHxd4j26g.png');
+            background-size: 120% auto;
+            background-position: center center;
+            background-repeat: no-repeat;
+            pointer-events: none;
+            z-index: 2;
+            opacity: 0.7;
+            mask: radial-gradient(circle 120px at 50% 50%, white 0%, white 30%, rgba(255,255,255,0.3) 70%, transparent 100%);
+            -webkit-mask: radial-gradient(circle 120px at 50% 50%, white 0%, white 30%, rgba(255,255,255,0.3) 70%, transparent 100%);
+            transition: mask 0.2s ease-out, -webkit-mask 0.2s ease-out;
+        }
+
+        /* Ensure main content is above the background */
         .main-content {
             position: relative;
             z-index: 10;
@@ -73,6 +90,11 @@
             text-decoration: none;
             font-family: 'Inter', sans-serif;
             font-size: 15px;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
+
+        nav a:hover {
+            color: #f0f0f0;
         }
 
         section.hero {
@@ -89,6 +111,7 @@
             overflow: hidden;
             margin-left: 30px;
             margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
         div.image-container img {
@@ -151,22 +174,26 @@
             font-weight: bold;
             line-height: 1.5;
             margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
 
         h2 {
             font-size: 28px;
             line-height: 1.4;
             margin-bottom: 10px;
+            text-shadow: 0 1px 5px rgba(0,0,0,0.3);
         }
 
         .working-on-container h3 {
             text-align: center;
+            text-shadow: 0 1px 5px rgba(0,0,0,0.3);
         }
 
         p {
             font-size: 18px;
             line-height: 1.5;
             margin-bottom: 10px;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
         }
 
         .email-form input[type="email"] {
@@ -174,9 +201,16 @@
             height: 40px;
             padding: 0 15px;
             margin-right: 10px;
-            border: 1px solid #ccc;
+            border: 1px solid rgba(255,255,255,0.2);
             border-radius: 4px;
             box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+            background: rgba(255,255,255,0.1);
+            color: white;
+            backdrop-filter: blur(10px);
+        }
+
+        .email-form input[type="email"]::placeholder {
+            color: rgba(255,255,255,0.7);
         }
 
         .email-sender-button {
@@ -188,12 +222,14 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 10px rgba(38, 107, 237, 0.3);
+            transition: all 0.2s ease;
         }
 
         .email-sender-button:hover {
             background-color: #176bab;
-            transform: translateY(0.5px);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(38, 107, 237, 0.4);
         }
 
         .currently-working-on-section {
@@ -213,6 +249,7 @@
         .what-im-doing-link {
             color: #38b8f9;
             text-decoration: none;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
         }
 
         .what-im-doing-link:hover {
@@ -227,8 +264,11 @@
     </style>
 </head>
 <body>
-    <!-- Beam spotlight effect -->
-    <div class="beam-spotlight" id="beamSpotlight"></div>
+    <!-- Darkened background beam -->
+    <div class="beam-background"></div>
+    
+    <!-- Spotlight overlay that reveals full brightness -->
+    <div class="spotlight-overlay" id="spotlightOverlay"></div>
 
     <!-- Main content wrapper -->
     <div class="main-content">
@@ -272,27 +312,45 @@
     </div>
 
     <script>
-        // Smooth spotlight effect that follows mouse
+        // Mercury-style spotlight effect
         document.addEventListener('DOMContentLoaded', function() {
-            const beamSpotlight = document.getElementById('beamSpotlight');
+            const spotlightOverlay = document.getElementById('spotlightOverlay');
             let mouseX = window.innerWidth / 2;
             let mouseY = window.innerHeight / 2;
 
             // Initialize spotlight position
-            beamSpotlight.style.clipPath = `circle(150px at ${mouseX}px ${mouseY}px)`;
+            updateSpotlight();
 
-            // Track mouse movement
+            function updateSpotlight() {
+                const maskValue = `radial-gradient(circle 120px at ${mouseX}px ${mouseY}px, white 0%, white 30%, rgba(255,255,255,0.3) 70%, transparent 100%)`;
+                spotlightOverlay.style.mask = maskValue;
+                spotlightOverlay.style.webkitMask = maskValue;
+            }
+
+            // Track mouse movement with smooth following
             document.addEventListener('mousemove', function(e) {
                 mouseX = e.clientX;
                 mouseY = e.clientY;
-                
-                // Update spotlight position with smooth transition
-                beamSpotlight.style.clipPath = `circle(150px at ${mouseX}px ${mouseY}px)`;
+                updateSpotlight();
             });
 
             // Handle window resize
             window.addEventListener('resize', function() {
-                beamSpotlight.style.clipPath = `circle(150px at ${mouseX}px ${mouseY}px)`;
+                updateSpotlight();
+            });
+
+            // Handle mouse leave - move spotlight off screen
+            document.addEventListener('mouseleave', function() {
+                mouseX = -200;
+                mouseY = -200;
+                updateSpotlight();
+            });
+
+            // Handle mouse enter - restore spotlight
+            document.addEventListener('mouseenter', function(e) {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                updateSpotlight();
             });
         });
     </script>
