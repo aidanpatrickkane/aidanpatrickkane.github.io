@@ -144,6 +144,10 @@
       height: 10px;
       opacity: 0.8;
       flex-shrink: 0;
+      position: relative; /* Add this */
+      display: flex; /* Add this */
+      align-items: center; /* Add this */
+      justify-content: center; /* Add this */
     }
 
     .external-icon::before {
@@ -154,8 +158,9 @@
       border-top: 1.5px solid currentColor;
       border-right: 1.5px solid currentColor;
       transform: rotate(45deg);
-      top: 1px;
-      right: 1px;
+      top: 50%; /* Change from 1px to 50% */
+      left: 50%; /* Change from right: 1px to left: 50% */
+      transform: rotate(45deg) translate(-50%, -50%); /* Update transform */
     }
 
     .external-icon::after {
@@ -164,10 +169,10 @@
       width: 1.5px;
       height: 7px;
       background: currentColor;
-      transform: rotate(45deg);
-      top: 2px;
-      right: 4px;
-      transform-origin: bottom;
+      top: 50%; /* Change from 2px to 50% */
+      left: 50%; /* Change from right: 4px to left: 50% */
+      transform: rotate(45deg) translate(-50%, -50%); /* Update transform */
+      transform-origin: center; /* Change from bottom to center */
     }
 
     #lightbox {
