@@ -188,14 +188,23 @@
       items.forEach((item, index) => {
         const columnIndex = index % columnCount;
         const targetColumn = columns[columnIndex];
+
+        const wrapper = item.pageUrl
+          ? Object.assign(document.createElement("a"), {
+            href: item.pageUrl,
+            target: "_blank",
+            rel: "noopener noreferrer"
+          }) : document.createElement("div");
+        
+        let node;
         
         if (item.type === "youtube") {
-          const iframe = document.createElement("iframe");
-          iframe.src = item.imageUrl.replace("watch?v=", "embed/");
-          iframe.width = "100%";
-          iframe.height = "315";
-          iframe.allowFullscreen = true;
-          iframe.style.borderRadius = "6px";
+          const node = document.createElement("iframe");
+          node.src = item.imageUrl.replace("watch?v=", "embed/");
+          node.width = "100%";
+          node.height = "315";
+          node.allowFullscreen = true;
+          node.style.borderRadius = "6px";
           iframe.style.display = "block";
           targetColumn.appendChild(iframe);
         } else if (item.type === "x") {
@@ -209,25 +218,26 @@
           }
         } else {
           const isVideo = item.imageUrl.endsWith(".mp4");
-          const media = isVideo
+          node = isVideo
             ? document.createElement("video")
             : document.createElement("img");
           
-          media.src = item.imageUrl;
-          media.style.borderRadius = "6px";
-          media.style.width = "100%";
-          media.style.display = "block";
+          node.src = item.imageUrl;
+          node.style.borderRadius = "6px";
+          node.style.width = "100%";
+          node.style.display = "block";
 
           if (isVideo) {
-            media.loop = true;
-            media.autoplay = true;
-            media.muted = true;
-            media.playsInline = true;
+            node.loop = true;
+            node.autoplay = true;
+            node.muted = true;
+            node.playsInline = true;
           } else {
             media.classList.add("clickable-image");
           }
 
-          targetColumn.appendChild(media);
+          wrapper.appendChild(node);
+          targetColumn.appendChild(wrapper);
         }
       });
     }
