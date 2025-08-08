@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Superchill</title>
   <link rel="icon" type="image/png" href="../Screenshot 2024-03-20 at 7.44.00 PM.png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
   <style>
     body {
       margin: 0;
@@ -95,6 +95,47 @@
       width: 100%;
     }
 
+    /* Domain popup styles */
+    .domain-popup {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(30, 30, 30, 0.95);
+      backdrop-filter: blur(10px);
+      color: #e0e0e0;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: none;
+      z-index: 1001;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .domain-popup.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .domain-popup::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: -1px;
+      right: -1px;
+      bottom: -1px;
+      background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+      border-radius: 8px;
+      z-index: -1;
+    }
+
     #lightbox {
       position: fixed;
       top: 0;
@@ -131,6 +172,13 @@
       .column {
         width: 100%;
       }
+      
+      .domain-popup {
+        bottom: 15px;
+        right: 15px;
+        font-size: 12px;
+        padding: 6px 10px;
+      }
     }
   </style>
 </head>
@@ -148,11 +196,14 @@
   </nav>
 
   <div class="grid" id="moodboard"></div>
+  
+   Domain popup 
+  <div class="domain-popup" id="domain-popup"></div>
 
   <div id="lightbox">
     <img id="lightbox-img" src="/placeholder.svg" alt="Enlarged image" />
     <video id="lightbox-video" loop autoplay muted playsinline></video>
-  </div>  
+  </div>
 
   <script>
     function getColumnCount() {
@@ -166,7 +217,6 @@
     function createColumns(columnCount) {
       const grid = document.getElementById("moodboard");
       grid.innerHTML = ''; // Clear existing content
-      
       const columns = [];
       for (let i = 0; i < columnCount; i++) {
         const column = document.createElement('div');
@@ -177,50 +227,86 @@
       return columns;
     }
 
+    // Domain popup functionality
+    function extractDomain(url) {
+      try {
+        const urlObj = new URL(url);
+        return urlObj.hostname.replace('www.', '').toUpperCase();
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function showDomainPopup(domain) {
+      const popup = document.getElementById('domain-popup');
+      popup.textContent = domain;
+      popup.classList.add('show');
+    }
+
+    function hideDomainPopup() {
+      const popup = document.getElementById('domain-popup');
+      popup.classList.remove('show');
+    }
+
     async function fetchImages() {
       const res = await fetch("https://beforreal-jwyoip568-aidans-projects-e5f3f09f.vercel.app/get-images");
       const items = await res.json();
-      
       const columnCount = getColumnCount();
       const columns = createColumns(columnCount);
-      
+
       // Distribute items left to right across columns
       items.forEach((item, index) => {
         const columnIndex = index % columnCount;
         const targetColumn = columns[columnIndex];
-
         const wrapper = item.pageUrl
           ? Object.assign(document.createElement("a"), {
-            href: item.pageUrl,
-            target: "_blank",
-            rel: "noopener noreferrer"
-          }) : document.createElement("div");
-        
-        let node;
-        
-        if (item.type === "youtube") {
-        node = document.createElement("iframe");
-        node.src   = item.imageUrl.replace("watch?v=", "embed/");
-        node.width = "100%";
-        node.height= "315";
-        node.allowFullscreen = true;
-        node.style.borderRadius = "6px";
-      } else if (item.type === "x") {
-        node = document.createElement("div");
-        node.className = "twitter-container";
-        node.innerHTML = item.imageUrl;
-        setTimeout(()=>window.twttr?.widgets?.load(node),0);
-      } else {
-        const isVideo = item.imageUrl.endsWith(".mp4");
-        node = isVideo ? document.createElement("video") : document.createElement("img");
-        Object.assign(node.style,{width:"100%",borderRadius:"6px",display:"block"});
-        node.src = item.imageUrl;
-        if (isVideo) { node.loop = node.autoplay = node.muted = true; node.playsInline = true; }
-        else { node.classList.add("clickable-image"); }
-      }
-      wrapper.appendChild(node);
-      targetColumn.appendChild(wrapper);
+              href: item.pageUrl,
+              target: "_blank",
+              rel: "noopener noreferrer"
+            })
+          : document.createElement("div");
 
+        // Add domain popup functionality to anchor tags
+        if (item.pageUrl) {
+          const domain = extractDomain(item.pageUrl);
+          if (domain) {
+            wrapper.addEventListener('mouseenter', () => showDomainPopup(domain));
+            wrapper.addEventListener('mouseleave', hideDomainPopup);
+          }
+        }
+
+        let node;
+        if (item.type === "youtube") {
+          node = document.createElement("iframe");
+          node.src = item.imageUrl.replace("watch?v=", "embed/");
+          node.width = "100%";
+          node.height = "315";
+          node.allowFullscreen = true;
+          node.style.borderRadius = "6px";
+        } else if (item.type === "x") {
+          node = document.createElement("div");
+          node.className = "twitter-container";
+          node.innerHTML = item.imageUrl;
+          setTimeout(() => window.twttr?.widgets?.load(node), 0);
+        } else {
+          const isVideo = item.imageUrl.endsWith(".mp4");
+          node = isVideo ? document.createElement("video") : document.createElement("img");
+          Object.assign(node.style, {
+            width: "100%",
+            borderRadius: "6px",
+            display: "block"
+          });
+          node.src = item.imageUrl;
+          if (isVideo) {
+            node.loop = node.autoplay = node.muted = true;
+            node.playsInline = true;
+          } else {
+            node.classList.add("clickable-image");
+          }
+        }
+
+        wrapper.appendChild(node);
+        targetColumn.appendChild(wrapper);
       });
     }
 
@@ -231,7 +317,6 @@
       resizeTimeout = setTimeout(() => {
         const newColumnCount = getColumnCount();
         const currentColumnCount = document.querySelectorAll('.column').length;
-        
         if (newColumnCount !== currentColumnCount) {
           fetchImages(); // Re-fetch and redistribute
         }
@@ -258,11 +343,13 @@
         lightboxImg.style.display = "block";
         lightboxVideo.style.display = "none";
         lightbox.style.display = "flex";
+        hideDomainPopup(); // Hide popup when lightbox opens
       } else if (isVideo) {
         lightboxVideo.src = e.target.src;
         lightboxVideo.style.display = "block";
         lightboxImg.style.display = "none";
         lightbox.style.display = "flex";
+        hideDomainPopup(); // Hide popup when lightbox opens
       } else if (
         e.target === lightbox ||
         e.target === lightboxImg ||
