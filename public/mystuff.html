@@ -199,46 +199,28 @@
         let node;
         
         if (item.type === "youtube") {
-          const node = document.createElement("iframe");
-          node.src = item.imageUrl.replace("watch?v=", "embed/");
-          node.width = "100%";
-          node.height = "315";
-          node.allowFullscreen = true;
-          node.style.borderRadius = "6px";
-          iframe.style.display = "block";
-          targetColumn.appendChild(iframe);
-        } else if (item.type === "x") {
-          const container = document.createElement("div");
-          container.className = "twitter-container";
-          container.innerHTML = item.imageUrl;
-          targetColumn.appendChild(container);
+        node = document.createElement("iframe");
+        node.src   = item.imageUrl.replace("watch?v=", "embed/");
+        node.width = "100%";
+        node.height= "315";
+        node.allowFullscreen = true;
+        node.style.borderRadius = "6px";
+      } else if (item.type === "x") {
+        node = document.createElement("div");
+        node.className = "twitter-container";
+        node.innerHTML = item.imageUrl;
+        setTimeout(()=>window.twttr?.widgets?.load(node),0);
+      } else {
+        const isVideo = item.imageUrl.endsWith(".mp4");
+        node = isVideo ? document.createElement("video") : document.createElement("img");
+        Object.assign(node.style,{width:"100%",borderRadius:"6px",display:"block"});
+        node.src = item.imageUrl;
+        if (isVideo) { node.loop = node.autoplay = node.muted = true; node.playsInline = true; }
+        else { node.classList.add("clickable-image"); }
+      }
+      wrapper.appendChild(node);
+      targetColumn.appendChild(wrapper);
 
-          if (window.twttr && twttr.widgets && twttr.widgets.load) {
-            twttr.widgets.load(container);
-          }
-        } else {
-          const isVideo = item.imageUrl.endsWith(".mp4");
-          node = isVideo
-            ? document.createElement("video")
-            : document.createElement("img");
-          
-          node.src = item.imageUrl;
-          node.style.borderRadius = "6px";
-          node.style.width = "100%";
-          node.style.display = "block";
-
-          if (isVideo) {
-            node.loop = true;
-            node.autoplay = true;
-            node.muted = true;
-            node.playsInline = true;
-          } else {
-            media.classList.add("clickable-image");
-          }
-
-          wrapper.appendChild(node);
-          targetColumn.appendChild(wrapper);
-        }
       });
     }
 
