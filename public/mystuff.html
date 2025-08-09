@@ -160,6 +160,62 @@
       transform: rotate(45deg);
     }
 
+    /* Text card */
+    .text-card {
+      width: 100%;
+      border-radius: 10px;
+      padding: 18px 18px 14px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 8px 22px rgba(0,0,0,0.45);
+      position: relative;
+      cursor: pointer;
+      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+    }
+
+    .text-card:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 26px rgba(0,0,0,0.55);
+      border-color: rgba(255,255,255,0.18);
+    }
+
+    .text-quote {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #e8e8e8;
+      margin: 0 0 10px;
+      white-space: pre-wrap;       /* keep user line breaks */
+    }
+
+    .text-quote::before, .text-quote::after {
+      content: "“";
+      color: #aaa;
+      margin-right: 3px;
+    }
+    .text-quote::after { content: "”"; margin-left: 3px; }
+
+    .text-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      opacity: 0.8;
+      font-size: 11px;
+      letter-spacing: .4px;
+      text-transform: uppercase;
+    }
+
+    .text-meta .dot {
+      width: 4px; height: 4px; border-radius: 50%; background: currentColor; opacity: 0.7;
+    }
+
+    .text-domain-chip {
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+
     #lightbox {
       position: fixed;
       top: 0;
@@ -298,65 +354,113 @@
     }
 
     async function fetchImages() {
-      const res = await fetch("https://beforreal-jwyoip568-aidans-projects-e5f3f09f.vercel.app/get-images");
+      const res = await fetch("https://beforreal-7clkg2mej-aidans-projects-e5f3f09f.vercel.app/get-images");
       const items = await res.json();
       const columnCount = getColumnCount();
       const columns = createColumns(columnCount);
 
       // Distribute items left to right across columns
       items.forEach((item, index) => {
-        const columnIndex = index % columnCount;
-        const targetColumn = columns[columnIndex];
-        const wrapper = item.pageUrl
-          ? Object.assign(document.createElement("a"), {
-              href: item.pageUrl,
-              target: "_blank",
-              rel: "noopener noreferrer"
-            })
-          : document.createElement("div");
+      const columnIndex = index % columnCount;
+      const targetColumn = columns[columnIndex];
 
-        // Add domain popup functionality to anchor tags
-        if (item.pageUrl) {
-          const domain = extractDomain(item.pageUrl);
-          if (domain) {
-            wrapper.addEventListener('mouseenter', () => showDomainPopup(wrapper, domain));
-            wrapper.addEventListener('mouseleave', () => hideDomainPopup(wrapper));
-          }
+      // Anchor wrapper if we have a source link (same as before)
+      const wrapper = item.pageUrl
+        ? Object.assign(document.createElement("a"), {
+            href: item.pageUrl,
+            target: "_blank",
+            rel: "noopener noreferrer"
+          })
+        : document.createElement("div");
+
+      // Domain popup on hover (same as before)
+      if (item.pageUrl) {
+        const domain = extractDomain(item.pageUrl);
+        if (domain) {
+          wrapper.addEventListener("mouseenter", () => showDomainPopup(wrapper, domain));
+          wrapper.addEventListener("mouseleave", () => hideDomainPopup(wrapper));
+        }
+      }
+
+      let node;
+
+      // NEW: text cards
+      if (item.type === "text") {
+        const card = document.createElement("div");
+        card.className = "text-card"; // use the CSS you added
+
+        const quote = document.createElement("p");
+        quote.className = "text-quote";
+        quote.textContent = item.textContent || ""; // plain text; preserves \n with CSS white-space: pre-wrap
+
+        const meta = document.createElement("div");
+        meta.className = "text-meta";
+
+        // source domain chip
+        const domain = extractDomain(item.pageUrl || "");
+        if (domain) {
+          const chip = document.createElement("span");
+          chip.className = "text-domain-chip";
+          chip.textContent = domain;
+          meta.appendChild(chip);
         }
 
-        let node;
-        if (item.type === "youtube") {
-          node = document.createElement("iframe");
-          node.src = item.imageUrl.replace("watch?v=", "embed/");
-          node.width = "100%";
-          node.height = "315";
-          node.allowFullscreen = true;
-          node.style.borderRadius = "6px";
-        } else if (item.type === "x") {
-          node = document.createElement("div");
-          node.className = "twitter-container";
-          node.innerHTML = item.imageUrl;
-          setTimeout(() => window.twttr?.widgets?.load(node), 0);
+        // optional page title
+        if (item.pageTitle) {
+          const dot = document.createElement("span");
+          dot.className = "dot";
+          meta.appendChild(dot);
+
+          const title = document.createElement("span");
+          title.textContent = item.pageTitle;
+          meta.appendChild(title);
+        }
+
+        card.appendChild(quote);
+        card.appendChild(meta);
+
+        // clicking the card opens the source (wrapper is already an <a> if pageUrl exists)
+        node = card;
+      }
+      // YouTube embeds (unchanged)
+      else if (item.type === "youtube") {
+        node = document.createElement("iframe");
+        node.src = item.imageUrl.replace("watch?v=", "embed/");
+        node.width = "100%";
+        node.height = "315";
+        node.allowFullscreen = true;
+        node.style.borderRadius = "6px";
+      }
+      // X/Twitter embeds (unchanged)
+      else if (item.type === "x") {
+        node = document.createElement("div");
+        node.className = "twitter-container";
+        node.innerHTML = item.imageUrl;
+        setTimeout(() => window.twttr?.widgets?.load(node), 0);
+      }
+      // Images / videos / screenshots (unchanged)
+      else {
+        // guard in case some non-text item lacks imageUrl
+        const url = item.imageUrl || "";
+        const isVideo = url.endsWith(".mp4");
+        node = isVideo ? document.createElement("video") : document.createElement("img");
+        Object.assign(node.style, {
+          width: "100%",
+          borderRadius: "6px",
+          display: "block"
+        });
+        node.src = url;
+        if (isVideo) {
+          node.loop = node.autoplay = node.muted = true;
+          node.playsInline = true;
         } else {
-          const isVideo = item.imageUrl.endsWith(".mp4");
-          node = isVideo ? document.createElement("video") : document.createElement("img");
-          Object.assign(node.style, {
-            width: "100%",
-            borderRadius: "6px",
-            display: "block"
-          });
-          node.src = item.imageUrl;
-          if (isVideo) {
-            node.loop = node.autoplay = node.muted = true;
-            node.playsInline = true;
-          } else {
-            node.classList.add("clickable-image");
-          }
+          node.classList.add("clickable-image");
         }
+      }
 
-        wrapper.appendChild(node);
-        targetColumn.appendChild(wrapper);
-      });
+      wrapper.appendChild(node);
+      targetColumn.appendChild(wrapper);
+    });
     }
 
     // Handle window resize to redistribute items
