@@ -218,6 +218,39 @@
     text-decoration: none;
   }
 
+/* Remove all text decoration from text card links */
+a {
+  text-decoration: none !important;
+}
+
+a:hover {
+  text-decoration: none !important;
+}
+
+a:visited {
+  text-decoration: none !important;
+}
+
+a:active {
+  text-decoration: none !important;
+}
+
+/* Specifically target text card elements */
+.text-card, .text-card * {
+  text-decoration: none !important;
+}
+
+.text-quote {
+  font-family: 'Lora', serif;
+  font-size: 20px;
+  line-height: 1.6;
+  color: #000;
+  margin: 0;
+  max-width: 90%;
+  white-space: pre-wrap;
+  text-decoration: none !important;
+}
+
 
   #lightbox {
     position: fixed;
