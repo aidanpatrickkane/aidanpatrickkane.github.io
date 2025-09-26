@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lookin’ Up — Support</title>
+  <meta name="description" content="Support page for Lookin’ Up, the once-a-day inspiration app. Contact the developer at kaneaidan12@gmail.com." />
+  <meta name="theme-color" content="#0B0B0C" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Lookin’ Up — Support" />
+  <meta property="og:description" content="Need help or want to submit content? Email the developer: kaneaidan12@gmail.com." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://aidanpkane.com/lookin-up-support" />
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Lookin’ Up — Support" />
+  <meta name="twitter:description" content="Need help or want to submit content? Email: kaneaidan12@gmail.com." />
+
+  <style>
+    :root {
+      --bg: #0b0b0c;
+      --card: #121214;
+      --text: #f6f7f9;
+      --muted: #b8bcc6;
+      --accent: #7dd3fc;
+      --ring: rgba(125,211,252,0.4);
+      --maxw: 860px;
+      --radius: 18px;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+        Helvetica, Arial, Apple Color Emoji, Segoe UI Emoji;
+      color: var(--text);
+      background: radial-gradient(1200px 600px at 70% -10%, #1b1b1f, var(--bg));
+      line-height: 1.6;
+    }
+    .wrap {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 40px 20px 64px;
+    }
+    header {
+      display: grid;
+      gap: 6px;
+      margin: 24px 0 28px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(125,211,252,0.12);
+      color: var(--accent);
+      width: fit-content;
+      border: 1px solid rgba(125,211,252,0.25);
+    }
+    h1 {
+      font-size: clamp(28px, 4vw, 40px);
+      letter-spacing: -0.02em;
+      margin: 0;
+    }
+    .sub {
+      color: var(--muted);
+      max-width: 60ch;
+      margin-top: 6px;
+    }
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius);
+      padding: 20px;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.03), 0 10px 30px rgba(0,0,0,0.35);
+    }
+    .grid {
+      display: grid;
+      gap: 16px;
+    }
+    @media (min-width: 820px) {
+      .grid {
+        grid-template-columns: 1.2fr 1fr;
+        gap: 20px;
+      }
+    }
+    .label {
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 0.02em;
+      color: var(--muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+    .contact {
+      display: grid;
+      gap: 12px;
+    }
+    .mailto {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 16px;
+      background: #0f141a;
+      border: 1px solid rgba(125,211,252,0.35);
+      color: var(--text);
+      border-radius: 12px;
+      text-decoration: none;
+      outline: none;
+      transition: transform .06s ease, box-shadow .2s ease, border-color .2s ease;
+      box-shadow: 0 0 0 0 rgba(125,211,252,0);
+    }
+    .mailto:hover { transform: translateY(-1px); }
+    .mailto:focus { box-shadow: 0 0 0 6px var(--ring); }
+    .mailto .dot {
+      width: 10px; height: 10px; border-radius: 999px; background: var(--accent);
+      box-shadow: 0 0 12px rgba(125,211,252,.7);
+      flex: none;
+    }
+    .code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      font-size: 14px;
+      color: var(--muted);
+      word-break: break-all;
+    }
+    details {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 14px 16px;
+    }
+    details + details { margin-top: 10px; }
+    summary {
+      cursor: pointer;
+      font-weight: 600;
+    }
+    footer {
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: 13px;
+      display: grid;
+      gap: 8px;
+    }
+    .sep { height: 1px; background: rgba(255,255,255,0.08); border: none; margin: 24px 0; }
+    .list {
+      display: grid;
+      gap: 10px;
+    }
+    a.inline {
+      color: var(--accent);
+      text-underline-offset: 2px;
+    }
+  </style>
+
+  <!-- JSON-LD for basic app support page -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Lookin’ Up",
+    "applicationCategory": "MobileApplication",
+    "operatingSystem": "iOS",
+    "url": "https://YOUR-DOMAIN/support",
+    "creator": { "@type": "Person", "name": "Aidan Kane" },
+    "inLanguage": "en",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "supportContactPoint": {
+      "@type": "ContactPoint",
+      "email": "kaneaidan12@gmail.com",
+      "contactType": "customer support",
+      "availableLanguage": "English"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <span class="badge" aria-label="Support badge">Lookin’ Up • Support</span>
+      <h1>We’re here to help.</h1>
+      <p class="sub">Questions, feedback, or content submissions? Reach the developer directly by email. The app is free, in English, and your reflections are private by design.</p>
+    </header>
+
+    <section class="grid" aria-label="Support and FAQs">
+      <div class="card">
+        <div class="label">Contact</div>
+        <div class="contact" role="group" aria-label="Contact options">
+          <a class="mailto" href="mailto:kaneaidan12@gmail.com?subject=Lookin%E2%80%99%20Up%20Support&body=Hi%20Aidan%2C%0A%0A(App%20version%3A%20%5Badd%20if%20you%20know%5D%2C%20iOS%20version%3A%20%5Boptional%5D)%0A%0AIssue%20or%20feedback%3A%0A">
+            <span class="dot" aria-hidden="true"></span>
+            <span>kaneaidan12@gmail.com</span>
+          </a>
+          <p class="code" aria-label="Email address (copy)">
+            mailto:kaneaidan12@gmail.com
+          </p>
+          <p class="sub">Typical replies are straightforward and helpful. Please include any steps to reproduce an issue, if applicable.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="label">FAQs</div>
+        <div class="list">
+          <details>
+            <summary>What is Lookin’ Up?</summary>
+            <p>Lookin’ Up shares a single, handpicked piece of higher-order inspiration once per day—classic poems, speeches, and more—so you start the morning with something worth thinking about.</p>
+          </details>
+          <details>
+            <summary>How does the “once per day” limit work?</summary>
+            <p>You’ll see one selection per day to encourage focus and reflection. No feeds, no scrolling—just one meaningful thing.</p>
+          </details>
+          <details>
+            <summary>Are my reflections private?</summary>
+            <p>Yes. Reflection space is private. There is no social sharing or public profile.</p>
+          </details>
+          <details>
+            <summary>How do I submit content ideas?</summary>
+            <p>Email suggestions to <a class="inline" href="mailto:kaneaidan12@gmail.com?subject=Lookin%E2%80%99%20Up%20Submission">kaneaidan12@gmail.com</a>. Include a link, title, and why it matters to you.</p>
+          </details>
+          <details>
+            <summary>Is the app free?</summary>
+            <p>Yes—completely free.</p>
+          </details>
+          <details>
+            <summary>Which languages are supported?</summary>
+            <p>English only for now.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <hr class="sep" />
+
+    <section class="card" aria-label="Privacy note">
+      <div class="label">Privacy</div>
+      <p>Lookin’ Up collects no personal data for sharing. If you email support, your message is used solely to respond to your request. For App Store review purposes: the app’s reflection feature is local/private and not shared.</p>
+    </section>
+
+    <footer>
+      <span>© <span id="year"></span> Lookin’ Up</span>
+      <span>Last updated: <time datetime="2025-09-26">September 26, 2025</time></span>
+    </footer>
+  </div>
+
+  <script>
+    // Set current year
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
