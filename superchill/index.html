@@ -324,6 +324,9 @@ a:active {
     return 4;
   }
 
+  let allMediaItems = []; // Store all clickable media items
+  let currentLightboxIndex = -1;
+
   function createColumns(columnCount) {
     const grid = document.getElementById("moodboard");
     grid.innerHTML = ''; // Clear existing content
@@ -389,6 +392,7 @@ a:active {
   async function fetchImages() {
     const res = await fetch("https://beforreal-4nav9eaoy-aidans-projects-e5f3f09f.vercel.app/get-images");
     const items = await res.json();
+    allMediaItems = [];
     const columnCount = getColumnCount();
     const columns = createColumns(columnCount);
 
@@ -417,7 +421,6 @@ a:active {
 
     let node;
 
-    // NEW: text cards
     if (item.type === "text") {
       const card = document.createElement("div");
       card.className = "text-card";
@@ -476,6 +479,11 @@ a:active {
       }
     }
 
+    if (item.type !== "text" && item.type !== "youtube" && item.type !== "x") {
+      node.dataset.itemIndex = allMediaItems.length;
+      allMediaItems.push(item);
+    }
+
     wrapper.appendChild(node);
     targetColumn.appendChild(wrapper);
   });
@@ -509,19 +517,10 @@ a:active {
     const isImage = e.target.tagName === "IMG" && e.target.closest(".grid");
     const isVideo = e.target.tagName === "VIDEO" && e.target.closest(".grid");
 
-    if (isImage) {
-      lightboxImg.src = e.target.src;
-      lightboxImg.style.display = "block";
-      lightboxVideo.style.display = "none";
-      lightbox.style.display = "flex";
-      // Hide any visible popups
-      document.querySelectorAll('.domain-popup').forEach(popup => popup.remove());
-    } else if (isVideo) {
-      lightboxVideo.src = e.target.src;
-      lightboxVideo.style.display = "block";
-      lightboxImg.style.display = "none";
-      lightbox.style.display = "flex";
-      // Hide any visible popups
+    if (isImage || isVideo) {
+      const mediaElement = e.target;
+      currentLightboxIndex = parseInt(mediaElement.dataset.itemIndex);
+      showLightboxMedia(currentLightboxIndex);
       document.querySelectorAll('.domain-popup').forEach(popup => popup.remove());
     } else if (
       e.target === lightbox ||
@@ -531,9 +530,52 @@ a:active {
       lightbox.style.display = "none";
       lightboxVideo.pause();
       lightboxVideo.currentTime = 0;
+      currentLightboxIndex = -1;
+    }
+  });
+
+  function showLightboxMedia(index) {
+    if (index < 0 || index >= allMediaItems.length) return;
+    
+    const item = allMediaItems[index];
+    const isVideo = item.imageUrl.endsWith(".mp4");
+    
+    if (isVideo) {
+      lightboxVideo.src = item.imageUrl;
+      lightboxVideo.style.display = "block";
+      lightboxImg.style.display = "none";
+    } else {
+      lightboxImg.src = item.imageUrl;
+      lightboxImg.style.display = "block";
+      lightboxVideo.style.display = "none";
+    }
+    
+    lightbox.style.display = "flex";
+  }
+
+  // Keyboard navigation
+  document.addEventListener("keydown", (e) => {
+    if (lightbox.style.display !== "flex") return;
+    
+    if (e.key === "ArrowLeft") {
+      // More recent (lower index)
+      if (currentLightboxIndex > 0) {
+        currentLightboxIndex--;
+        showLightboxMedia(currentLightboxIndex);
+      }
+    } else if (e.key === "ArrowRight") {
+      // Less recent (higher index)
+      if (currentLightboxIndex < allMediaItems.length - 1) {
+        currentLightboxIndex++;
+        showLightboxMedia(currentLightboxIndex);
+      }
+    } else if (e.key === "Escape") {
+      lightbox.style.display = "none";
+      lightboxVideo.pause();
+      lightboxVideo.currentTime = 0;
+      currentLightboxIndex = -1;
     }
   });
 </script>
 </body>
 </html>
-
