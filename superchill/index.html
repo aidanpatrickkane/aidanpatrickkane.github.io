@@ -47,6 +47,29 @@
     font-size: 15px;
   }
 
+  .shuffle-button {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-right: 20px;
+  }
+
+  .shuffle-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .shuffle-button:active {
+    transform: scale(0.95);
+  }
+
   .grid {
     display: flex;
     gap: 20px;
@@ -300,6 +323,7 @@ a:active {
 </head>
 <body>
 <nav>
+  <button class="shuffle-button" onclick="shuffleAndRedraw()">Shuffle</button>
   <ul>
     <li><a href="https://aidanpkane.com">Home</a></li>
     <li><a href="https://madebykane.com">Body of Work</a></li>
@@ -324,8 +348,10 @@ a:active {
     return 4;
   }
 
-  let allMediaItems = []; // Store all clickable media items
+  let allMediaItems = []; // Store all clickable media items (in display order)
   let currentLightboxIndex = -1;
+  let originalItems = []; // Store original fetched items
+  let currentDisplayOrder = []; // Store current display order
 
   function createColumns(columnCount) {
     const grid = document.getElementById("moodboard");
@@ -389,10 +415,26 @@ a:active {
     }
   }
 
+  // Fisher-Yates shuffle algorithm
+  function shuffleArray(array) {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  }
+
   async function fetchImages() {
     const res = await fetch("https://beforreal-4nav9eaoy-aidans-projects-e5f3f09f.vercel.app/get-images");
     const items = await res.json();
+    originalItems = items;
+    drawItems(items);
+  }
+
+  function drawItems(items) {
     allMediaItems = [];
+    currentDisplayOrder = items; // Save current display order
     const columnCount = getColumnCount();
     const columns = createColumns(columnCount);
 
@@ -489,6 +531,11 @@ a:active {
   });
   }
 
+  function shuffleAndRedraw() {
+    const shuffled = shuffleArray(originalItems);
+    drawItems(shuffled);
+  }
+
   // Handle window resize to redistribute items
   let resizeTimeout;
   window.addEventListener('resize', () => {
@@ -497,7 +544,8 @@ a:active {
       const newColumnCount = getColumnCount();
       const currentColumnCount = document.querySelectorAll('.column').length;
       if (newColumnCount !== currentColumnCount) {
-        fetchImages(); // Re-fetch and redistribute
+        // Preserve current display order during resize
+        drawItems(currentDisplayOrder);
       }
     }, 250);
   });
