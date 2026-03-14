@@ -303,6 +303,21 @@ a:active {
     display: none;
   }
 
+  #lightbox-text {
+    width: 35%;
+    max-height: 80vh;
+    overflow-y: auto;
+    background: white;
+    color: #000;
+    border-radius: 8px;
+    padding: 40px 30px;
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
   /* Responsive column count */
   @media (max-width: 599px) {
     .grid {
@@ -372,7 +387,7 @@ a:active {
 
 <div id="password-screen">
   <h1>what's the secret password?</h1>
-  <input type="password" id="password-input" placeholder="type it here" autofocus />
+  <input type="password" id="password-input" autofocus />
   <div id="password-error"></div>
 </div>
 
@@ -411,6 +426,7 @@ a:active {
 <div id="lightbox">
   <img id="lightbox-img" src="/placeholder.svg" alt="Enlarged image" />
   <video id="lightbox-video" loop autoplay muted playsinline></video>
+  <div id="lightbox-text"></div>
 </div>
 
 <script>
@@ -422,7 +438,7 @@ a:active {
     return 4;
   }
 
-  let allMediaItems = []; // Store all clickable media items (in display order)
+  let allItems = []; // Store all items in display order (images, videos, text, etc.)
   let currentLightboxIndex = -1;
   let originalItems = []; // Store original fetched items
   let currentDisplayOrder = []; // Store current display order
@@ -507,13 +523,15 @@ a:active {
   }
 
   function drawItems(items) {
-    allMediaItems = [];
+    allItems = [];
     currentDisplayOrder = items; // Save current display order
     const columnCount = getColumnCount();
     const columns = createColumns(columnCount);
 
     // Distribute items left to right across columns
     items.forEach((item, index) => {
+    const globalIndex = allItems.length;
+    allItems.push(item);
     const columnIndex = index % columnCount;
     const targetColumn = columns[columnIndex];
 
@@ -596,8 +614,7 @@ a:active {
     }
 
     if (item.type !== "text" && item.type !== "youtube" && item.type !== "x") {
-      node.dataset.itemIndex = allMediaItems.length;
-      allMediaItems.push(item);
+      node.dataset.itemIndex = globalIndex;
     }
 
     wrapper.appendChild(node);
@@ -630,10 +647,19 @@ a:active {
   const lightbox = document.getElementById("lightbox");
   const lightboxImg = document.getElementById("lightbox-img");
   const lightboxVideo = document.getElementById("lightbox-video");
+  const lightboxText = document.getElementById("lightbox-text");
 
   // Prevent clicks inside the media from closing the lightbox
   lightboxImg.addEventListener("click", (e) => e.stopPropagation());
   lightboxVideo.addEventListener("click", (e) => e.stopPropagation());
+  lightboxText.addEventListener("click", (e) => e.stopPropagation());
+
+  function closeLightbox() {
+    lightbox.style.display = "none";
+    lightboxVideo.pause();
+    lightboxVideo.currentTime = 0;
+    currentLightboxIndex = -1;
+  }
 
   document.addEventListener("click", (e) => {
     const isImage = e.target.tagName === "IMG" && e.target.closest(".grid");
@@ -642,60 +668,70 @@ a:active {
     if (isImage || isVideo) {
       const mediaElement = e.target;
       currentLightboxIndex = parseInt(mediaElement.dataset.itemIndex);
-      showLightboxMedia(currentLightboxIndex);
+      showLightboxItem(currentLightboxIndex);
       document.querySelectorAll('.domain-popup').forEach(popup => popup.remove());
-    } else if (
-      e.target === lightbox ||
-      e.target === lightboxImg ||
-      e.target === lightboxVideo
-    ) {
-      lightbox.style.display = "none";
-      lightboxVideo.pause();
-      lightboxVideo.currentTime = 0;
-      currentLightboxIndex = -1;
+    } else if (e.target === lightbox) {
+      closeLightbox();
     }
   });
 
-  function showLightboxMedia(index) {
-    if (index < 0 || index >= allMediaItems.length) return;
-    
-    const item = allMediaItems[index];
-    const isVideo = item.imageUrl.endsWith(".mp4");
-    
-    if (isVideo) {
-      lightboxVideo.src = item.imageUrl;
-      lightboxVideo.style.display = "block";
-      lightboxImg.style.display = "none";
+  function showLightboxItem(index) {
+    if (index < 0 || index >= allItems.length) return;
+
+    const item = allItems[index];
+
+    // Hide all lightbox content
+    lightboxImg.style.display = "none";
+    lightboxVideo.style.display = "none";
+    lightboxText.style.display = "none";
+
+    if (item.type === "text") {
+      lightboxText.innerHTML = "";
+      const openingQuote = document.createElement("span");
+      openingQuote.className = "opening-quote";
+      openingQuote.textContent = "\u201c";
+      const quote = document.createElement("p");
+      quote.className = "text-quote";
+      quote.textContent = item.textContent || "";
+      const closingQuote = document.createElement("span");
+      closingQuote.className = "closing-quote";
+      closingQuote.textContent = "\u201d";
+      lightboxText.appendChild(openingQuote);
+      lightboxText.appendChild(quote);
+      lightboxText.appendChild(closingQuote);
+      lightboxText.style.display = "flex";
     } else {
-      lightboxImg.src = item.imageUrl;
-      lightboxImg.style.display = "block";
-      lightboxVideo.style.display = "none";
+      const url = item.imageUrl || "";
+      const isVideo = url.endsWith(".mp4");
+      if (isVideo) {
+        lightboxVideo.src = url;
+        lightboxVideo.style.display = "block";
+      } else {
+        lightboxImg.src = url;
+        lightboxImg.style.display = "block";
+      }
     }
-    
+
+    currentLightboxIndex = index;
     lightbox.style.display = "flex";
   }
 
   // Keyboard navigation
   document.addEventListener("keydown", (e) => {
     if (lightbox.style.display !== "flex") return;
-    
+
+    const skippable = (item) => item.type === "youtube" || item.type === "x";
+
     if (e.key === "ArrowLeft") {
-      // More recent (lower index)
-      if (currentLightboxIndex > 0) {
-        currentLightboxIndex--;
-        showLightboxMedia(currentLightboxIndex);
-      }
+      let newIndex = currentLightboxIndex - 1;
+      while (newIndex >= 0 && skippable(allItems[newIndex])) newIndex--;
+      if (newIndex >= 0) showLightboxItem(newIndex);
     } else if (e.key === "ArrowRight") {
-      // Less recent (higher index)
-      if (currentLightboxIndex < allMediaItems.length - 1) {
-        currentLightboxIndex++;
-        showLightboxMedia(currentLightboxIndex);
-      }
+      let newIndex = currentLightboxIndex + 1;
+      while (newIndex < allItems.length && skippable(allItems[newIndex])) newIndex++;
+      if (newIndex < allItems.length) showLightboxItem(newIndex);
     } else if (e.key === "Escape") {
-      lightbox.style.display = "none";
-      lightboxVideo.pause();
-      lightboxVideo.currentTime = 0;
-      currentLightboxIndex = -1;
+      closeLightbox();
     }
   });
 </script>
