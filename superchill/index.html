@@ -321,6 +321,80 @@ a:active {
   }
 </style>
 </head>
+<style>
+  #password-screen {
+    position: fixed;
+    inset: 0;
+    background: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    gap: 20px;
+  }
+
+  #password-screen h1 {
+    font-family: 'Lora', serif;
+    font-size: 28px;
+    color: white;
+    margin: 0;
+    letter-spacing: 0.5px;
+  }
+
+  #password-screen input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255,255,255,0.4);
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    padding: 8px 4px;
+    text-align: center;
+    outline: none;
+    width: 220px;
+    letter-spacing: 2px;
+  }
+
+  #password-screen input::placeholder {
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 1px;
+  }
+
+  #password-error {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: rgba(255,255,255,0.5);
+    height: 20px;
+    transition: opacity 0.2s;
+  }
+</style>
+
+<div id="password-screen">
+  <h1>what's the secret password?</h1>
+  <input type="password" id="password-input" placeholder="type it here" autofocus />
+  <div id="password-error"></div>
+</div>
+
+<script>
+  const passwordInput = document.getElementById('password-input');
+  const passwordError = document.getElementById('password-error');
+  const passwordScreen = document.getElementById('password-screen');
+
+  passwordInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      if (passwordInput.value === 'bananas') {
+        passwordScreen.remove();
+      } else {
+        passwordError.textContent = 'nosir';
+        passwordInput.value = '';
+      }
+    } else {
+      passwordError.textContent = '';
+    }
+  });
+</script>
+
 <body>
 <nav>
   <button class="shuffle-button" onclick="shuffleAndRedraw()">Shuffle</button>
